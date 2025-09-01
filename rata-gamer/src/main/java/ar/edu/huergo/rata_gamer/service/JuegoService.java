@@ -18,5 +18,9 @@ public class JuegoService {
         return juegoRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Juego no encontrado"));
     }
+
+    public Juego crearJuego(Juego juego) {
+        return juegoRepository.save(juego);
+    }
 }
 
