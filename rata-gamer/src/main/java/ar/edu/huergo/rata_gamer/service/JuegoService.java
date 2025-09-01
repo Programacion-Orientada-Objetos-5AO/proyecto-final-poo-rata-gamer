@@ -22,5 +22,11 @@ public class JuegoService {
     public Juego crearJuego(Juego juego) {
         return juegoRepository.save(juego);
     }
+
+    public Juego actualizarJuego(Juego juego, Long id){
+        Juego juegoACambiar = obtenerJuegoPorID(id);
+        juegoACambiar.setNombre(juego.getNombre());
+        return juegoRepository.save(juegoACambiar);
+    }
 }
 
