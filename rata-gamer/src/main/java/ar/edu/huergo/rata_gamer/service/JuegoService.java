@@ -28,5 +28,10 @@ public class JuegoService {
         juegoACambiar.setNombre(juego.getNombre());
         return juegoRepository.save(juegoACambiar);
     }
+
+    public void eliminarJuego(Long id){
+        Juego juegoABorrar = obtenerJuegoPorID(id);
+        juegoRepository.delete(juegoABorrar); 
+    }
 }
 
