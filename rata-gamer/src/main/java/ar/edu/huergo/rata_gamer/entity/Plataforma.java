@@ -1,4 +1,4 @@
-package ar.edu.huergo.rata_gamer.entity;
+/*package ar.edu.huergo.rata_gamer.entity;
 
 import jakarta.persistence.Entity;
 //falta añadir importaciones
@@ -20,5 +20,5 @@ public class Plataforma {
     @Column(length = 150)
     private String url;
 
-}
+}*/
 

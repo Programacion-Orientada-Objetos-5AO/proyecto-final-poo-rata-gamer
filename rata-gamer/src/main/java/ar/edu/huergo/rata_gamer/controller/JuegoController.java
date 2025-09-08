@@ -55,7 +55,7 @@ public class JuegoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<JuegoDTO> actualizarJuego(@PathVariable Long id, JuegoDTO juegoDTO) {
+    public ResponseEntity<JuegoDTO> actualizarJuego(@Valid @PathVariable Long id, JuegoDTO juegoDTO) {
         Juego juego = juegoMapper.toEntity(juegoDTO);
         Juego juegoActualizado = juegoService.actualizarJuego(juego, id);
         JuegoDTO juegoActualizadoDTO = juegoMapper.toDTO(juegoActualizado);
@@ -63,7 +63,7 @@ public class JuegoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminarJuego(@PathVariable Long id) {
+    public ResponseEntity<Void> eliminarJuego(@Valid @PathVariable Long id) {
         juegoService.eliminarJuego(id);
         return ResponseEntity.noContent().build();
     }
