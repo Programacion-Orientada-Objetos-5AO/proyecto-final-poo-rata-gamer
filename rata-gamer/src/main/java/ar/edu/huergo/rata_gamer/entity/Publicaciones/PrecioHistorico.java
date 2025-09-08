@@ -1,4 +1,4 @@
-package ar.edu.huergo.rata_gamer.entity;
+package ar.edu.huergo.rata_gamer.entity.Publicaciones;
 
 import java.time.LocalDate;
 import jakarta.persistence.Entity;
