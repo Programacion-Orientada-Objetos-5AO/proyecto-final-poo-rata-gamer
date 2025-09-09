@@ -1,4 +1,4 @@
-package ar.edu.huergo.rata_gamer.entity.Publicaciones;
+package ar.edu.huergo.rata_gamer.entity.publicaciones;
 
 import java.util.List;
 
@@ -15,8 +15,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "juegos")
 @Data
+@Table(name = "juegos")
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
