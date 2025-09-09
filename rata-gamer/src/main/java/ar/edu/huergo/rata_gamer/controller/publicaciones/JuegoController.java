@@ -1,4 +1,4 @@
-package ar.edu.huergo.rata_gamer.controller;
+package ar.edu.huergo.rata_gamer.controller.publicaciones;
 
 import java.net.URI;
 import java.util.List;
@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import ar.edu.huergo.rata_gamer.dto.JuegoDTO;
+import ar.edu.huergo.rata_gamer.dto.publicaciones.JuegoDTO;
 import ar.edu.huergo.rata_gamer.entity.publicaciones.Juego;
-import ar.edu.huergo.rata_gamer.mapper.JuegoMapper;
-import ar.edu.huergo.rata_gamer.service.JuegoService;
+import ar.edu.huergo.rata_gamer.mapper.publicaciones.JuegoMapper;
+import ar.edu.huergo.rata_gamer.service.publicaciones.JuegoService;
 import jakarta.validation.Valid;
 
 

@@ -1,9 +1,13 @@
-package ar.edu.huergo.rata_gamer.mapper;
+package ar.edu.huergo.rata_gamer.mapper.publicaciones;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+<<<<<<< HEAD:rata-gamer/src/main/java/ar/edu/huergo/rata_gamer/mapper/JuegoMapper.java
 import ar.edu.huergo.rata_gamer.dto.JuegoDTO;
+=======
+import ar.edu.huergo.rata_gamer.dto.publicaciones.JuegoDTO;
+>>>>>>> parent of c02589a (Revert "Merge branch 'feat/Juegos' of https://github.com/Programacion-Orientada-Objetos-5AO/proyecto-final-poo-rata-gamer into feat/Juegos"):rata-gamer/src/main/java/ar/edu/huergo/rata_gamer/mapper/publicaciones/JuegoMapper.java
 import ar.edu.huergo.rata_gamer.entity.publicaciones.Juego;
 
 
