@@ -1,11 +1,11 @@
-package ar.edu.huergo.rata_gamer.service.publicaciones;
+package ar.edu.huergo.rata_gamer.service;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ar.edu.huergo.rata_gamer.entity.publicaciones.Juego;
-import ar.edu.huergo.rata_gamer.repository.publicaciones.JuegoRepository;
+import ar.edu.huergo.rata_gamer.entity.Publicaciones.Juego;
+import ar.edu.huergo.rata_gamer.repository.JuegoRepository;
 import jakarta.persistence.EntityNotFoundException;
 
 @Service

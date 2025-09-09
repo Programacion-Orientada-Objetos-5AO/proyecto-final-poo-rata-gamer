@@ -37,6 +37,6 @@ public class DataInitializer {
                 u.setRoles(Set.of(cliente));
                 usuarioRepository.save(u);
             }
-        };
+        }
     }
 }

@@ -1,10 +1,10 @@
-package ar.edu.huergo.rata_gamer.mapper.publicaciones;
+package ar.edu.huergo.rata_gamer.mapper;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import ar.edu.huergo.rata_gamer.dto.publicaciones.JuegoDTO;
-import ar.edu.huergo.rata_gamer.entity.publicaciones.Juego;
+import ar.edu.huergo.rata_gamer.dto.JuegoDTO;
+import ar.edu.huergo.rata_gamer.entity.Publicaciones.Juego;
 
 
 @Component

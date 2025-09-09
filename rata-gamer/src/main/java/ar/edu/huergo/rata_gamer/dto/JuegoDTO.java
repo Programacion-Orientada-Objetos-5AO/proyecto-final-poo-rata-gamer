@@ -1,4 +1,4 @@
-package ar.edu.huergo.rata_gamer.dto.publicaciones;
+package ar.edu.huergo.rata_gamer.dto;
 
 import java.util.List;
 
