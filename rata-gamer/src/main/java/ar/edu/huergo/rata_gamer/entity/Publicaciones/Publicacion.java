@@ -1,4 +1,6 @@
-package ar.edu.huergo.rata_gamer.entity.Publicaciones;
+package ar.edu.huergo.rata_gamer.entity.publicaciones;
+
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -20,4 +22,8 @@ public class Publicacion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    // private Juego Juego;
+    // private Plataforma Plataforma;  
+    // private List<PrecioHistorico> preciosHistoricos;
 }
