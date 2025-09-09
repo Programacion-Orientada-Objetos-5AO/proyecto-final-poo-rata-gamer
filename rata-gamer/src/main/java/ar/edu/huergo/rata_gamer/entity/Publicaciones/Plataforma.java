@@ -1,4 +1,4 @@
-package ar.edu.huergo.rata_gamer.entity.Publicaciones;
+package ar.edu.huergo.rata_gamer.entity.publicaciones;
 /*package ar.edu.huergo.rata_gamer.entity;
 
 import jakarta.persistence.Entity;
