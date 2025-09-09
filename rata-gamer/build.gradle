@@ -24,10 +24,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
 
-	//Nueva dependencia para seguridad
-	implementation 'org.springframework.boot:spring-boot-starter-security'
+	// Nueva dependencia para seguridad
+	// implementation 'org.springframework.boot:spring-boot-starter-security'
 
 	// JWT
 	implementation 'io.jsonwebtoken:jjwt-api:0.12.5'
@@ -42,14 +41,8 @@ dependencies {
 	
 	implementation 'org.postgresql:postgresql'
 
-	
-	implementation 'org.postgresql:postgresql'
-
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
-
-	testImplementation 'com.h2database:h2'
-
 
 	testImplementation 'com.h2database:h2'
 
