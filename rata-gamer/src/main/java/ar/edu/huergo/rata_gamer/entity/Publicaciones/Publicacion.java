@@ -1,9 +1,4 @@
 package ar.edu.huergo.rata_gamer.entity.publicaciones;
-<<<<<<< HEAD
-
-import java.util.List;
-=======
->>>>>>> parent of c02589a (Revert "Merge branch 'feat/Juegos' of https://github.com/Programacion-Orientada-Objetos-5AO/proyecto-final-poo-rata-gamer into feat/Juegos")
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;

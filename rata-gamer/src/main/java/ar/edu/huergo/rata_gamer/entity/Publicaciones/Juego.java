@@ -26,10 +26,10 @@ public class Juego {
     private Long id;
 
     @NotBlank(message = "El nombre es obligatorio")
-    @Size(max = 500, message = "El nombre debe tener entre 2 y 100 caracteres")
+    @Size(max = 500, message = "El nombre debe tener menos de 501 caracteres")
     private String nombre;
 
 
-    // @Size(max = 100, message = "la pla no puede exceder los 500 caracteres")
+    // @Size(max = 100, message = "la plataforma no puede exceder los 100 caracteres")
     // private List<Plataforma> plataformas;
 }

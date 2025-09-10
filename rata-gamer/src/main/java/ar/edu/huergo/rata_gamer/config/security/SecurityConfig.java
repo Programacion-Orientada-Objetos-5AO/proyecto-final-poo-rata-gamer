@@ -37,15 +37,11 @@ public class SecurityConfig {
                 .sessionManagement(
                         session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/usuarios/registrar").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/pedidos").hasRole("CLIENTE")
-                        .requestMatchers(HttpMethod.GET, "/api/pedidos/reporte").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/api/platos/**")
-                        .hasAnyRole("ADMIN", "CLIENTE").requestMatchers("/api/ingredientes/**")
-                        .hasRole("ADMIN").requestMatchers(HttpMethod.POST, "/api/platos/**")
-                        .hasRole("ADMIN").requestMatchers(HttpMethod.PUT, "/api/platos/**")
-                        .hasRole("ADMIN").requestMatchers(HttpMethod.DELETE, "/api/platos/**")
+                        .requestMatchers(HttpMethod.GET, "/api/juegos/**")
+                        .hasAnyRole("ADMIN", "CLIENTE").requestMatchers("/api/juegos/**")
+                        .hasRole("ADMIN").requestMatchers(HttpMethod.POST, "/api/juegos/**")
+                        .hasRole("ADMIN").requestMatchers(HttpMethod.PUT, "/api/juegos/**")
+                        .hasRole("ADMIN").requestMatchers(HttpMethod.DELETE, "/api/juegos/**")
                         .hasRole("ADMIN").anyRequest().authenticated())
                 .exceptionHandling(
                         exceptions -> exceptions.accessDeniedHandler(accessDeniedHandler())
