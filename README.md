@@ -1,0 +1,1 @@
+Cuando se inicializa el proyecto, la carpeta "publicaciones" para como "Publicaciones" con la primera letra mayúscula. Antes de probar cambie el nombre de la carpeta a "publicaciones" sin niguna mayúscula
