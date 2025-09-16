@@ -45,7 +45,6 @@ public class JuegoRepositoryTest {
         juego3 = entityManager.persistAndFlush(juego3);
 
         entityManager.clear();
-
     }
 
 
@@ -103,14 +102,14 @@ public class JuegoRepositoryTest {
         List<Juego> resultadoPlan =
                 juegoRepository.findByNombreContainingIgnoreCase("plan");
         List<Juego> resultadoFort =
-                juegoRepository.findByNombreContainingIgnoreCase("fort");
+                juegoRepository.findByNombreContainingIgnoreCase("zomb");
 
         // Then
-        assertEquals(1, resultadoPlan.size());
-        assertEquals("Plantas vs Zombies ", resultadoPlan.get(0).getNombre());
+        assertEquals(2, resultadoPlan.size());
+        assertEquals("Plantas vs Zombies", resultadoPlan.get(0).getNombre());
 
-        assertEquals(1, resultadoFort.size());
-        assertEquals("Fortnite", resultadoFort.get(0).getNombre());
+        assertEquals(2, resultadoFort.size());
+        assertEquals("Plantas vs Zombies", resultadoFort.get(0).getNombre());
     }
 
     @Test
@@ -161,5 +160,80 @@ public class JuegoRepositoryTest {
                 juegoRepository.findById(juego1.getId());
         assertTrue(juegoVerificacion.isPresent());
         assertEquals(nuevoNombre, juegoVerificacion.get().getNombre());
+    }
+
+    @Test
+    @DisplayName("Debería eliminar juego correctamente")
+    void deberiaEliminarJuego() {
+        // Given
+        Long juegoId = juego1.getId();
+        assertTrue(juegoRepository.existsById(juegoId));
+
+        // When
+        juegoRepository.deleteById(juegoId);
+        entityManager.flush();
+
+        // Then
+        assertFalse(juegoRepository.existsById(juegoId));
+        Optional<Juego> juegoEliminado = juegoRepository.findById(juegoId);
+        assertFalse(juegoEliminado.isPresent());
+    }
+
+    @Test
+    @DisplayName("Debería encontrar todos los juegos")
+    void deberiaEncontrarTodosLosJuegos() {
+        // When
+        List<Juego> todosLosJuegos = juegoRepository.findAll();
+
+        // Then
+        assertNotNull(todosLosJuegos);
+        assertEquals(3, todosLosJuegos.size());
+
+        List<String> nombres = todosLosJuegos.stream().map(Juego::getNombre).toList();
+        assertTrue(nombres.contains("Plantas vs Zombies"));
+        assertTrue(nombres.contains("Plantas vs Zombies Garden Warfare"));
+        assertTrue(nombres.contains("Fortnite"));
+    }
+
+    @Test
+    @DisplayName("Debería contar juegos correctamente")
+    void deberiaContarJuegos() {
+        // When
+        long cantidadJuegos = juegoRepository.count();
+
+        // Then
+        assertEquals(3, cantidadJuegos);
+
+        // Agregar un juego más y verificar
+        Juego nuevoJuego = new Juego();
+        nuevoJuego.setNombre("Pokemon Ruby");
+        entityManager.persistAndFlush(nuevoJuego);
+
+        assertEquals(4, juegoRepository.count());
+    }
+
+    @Test
+    @DisplayName("Debería validar restricciones de la entidad")
+    void deberiaValidarRestricciones() {
+        // Given - Crear juego con nombre vacío
+        Juego juegoInvalido = new Juego();
+        juegoInvalido.setNombre(""); // Viola @NotBlank
+
+        // When & Then
+        assertThrows(Exception.class, () -> {
+            entityManager.persistAndFlush(juegoInvalido);
+        });
+    }
+
+    @Test
+    @DisplayName("Debería manejar nombres con espacios en la búsqueda")
+    void deberiaManejarNombresConEspacios() {
+        // When - Buscar parte del nombre que incluye espacios
+        List<Juego> resultado =
+                juegoRepository.findByNombreContainingIgnoreCase("Garden Warfare");
+
+        // Then
+        assertEquals(1, resultado.size());
+        assertEquals("Plantas vs Zombies Garden Warfare", resultado.get(0).getNombre());
     }
 }
