@@ -1,1 +1,1 @@
-Cuando se inicializa el proyecto, la carpeta "publicaciones" se crea como "Publicaciones" con la primera letra mayúscula. Antes de probar cambie el nombre de la carpeta a "publicaciones" sin niguna mayúscula
+Cuando se inicializa el proyecto, la carpeta "publicaciones" dentro de la carpeta entity se crea como "Publicaciones" con la primera letra mayúscula. Antes de probar cambie el nombre de la carpeta a "publicaciones" sin ninguna mayúscula
