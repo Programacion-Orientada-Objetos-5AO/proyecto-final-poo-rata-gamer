@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
@@ -23,6 +24,7 @@ public class Rol {
     private Long id;
 
     @Column(nullable = false, unique = true, length = 50)
+    @Size(max = 50)
     private String nombre; // Ej: ADMIN, CLIENTE
 
     public Rol(String nombre) {
