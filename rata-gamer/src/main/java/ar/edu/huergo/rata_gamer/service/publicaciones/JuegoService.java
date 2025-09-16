@@ -21,6 +21,10 @@ public class JuegoService {
                 .orElseThrow(() -> new EntityNotFoundException("Juego no encontrado"));
     }
 
+    public List<Juego> obtenerJuegosPorNombre(String nombre) {
+        return juegoRepository.findByNombreContainingIgnoreCase(nombre);
+    }
+
     public Juego crearJuego(Juego juego) {
         return juegoRepository.save(juego);
     }
