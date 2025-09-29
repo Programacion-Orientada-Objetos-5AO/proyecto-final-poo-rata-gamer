@@ -37,6 +37,11 @@ public class SecurityConfig {
                 .sessionManagement(
                         session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
+                        // Rutas públicas para las vistas web
+                        .requestMatchers("/web/", "/web/login", "/web/registro", "/web/acerca").permitAll()
+                        .requestMatchers("/css/**", "/js/**", "/images/**", "/favicon.ico").permitAll()
+                        
                         .requestMatchers(HttpMethod.GET, "/api/juegos/**")
                         .hasAnyRole("ADMIN", "CLIENTE").requestMatchers("/api/juegos/**")
                         .hasRole("ADMIN").requestMatchers(HttpMethod.POST, "/api/juegos/**")

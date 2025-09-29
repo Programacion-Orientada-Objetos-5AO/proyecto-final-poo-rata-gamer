@@ -13,7 +13,22 @@ header {
   text-align: center;
 }
 
+p {
+  line-height: 1.6;
+  margin: 15px;
+  color: #ff00d4;
+}
 
+h1 {
+  color: #ff0015;
+}
 
-
-
+footer {
+  background: #333;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+}
