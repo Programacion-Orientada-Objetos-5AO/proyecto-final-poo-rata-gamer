@@ -6,9 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ar.edu.huergo.rata_gamer.entity.publicaciones.PrecioHistorico;
 import ar.edu.huergo.rata_gamer.repository.publicaciones.PrecioHistoricoRepository;
 import jakarta.persistence.EntityNotFoundException;
-import ar.edu.huergo.rata_gamer.entity.publicaciones.PrecioHistorico;
 
 @Service
 public class PrecioHistoricoService {

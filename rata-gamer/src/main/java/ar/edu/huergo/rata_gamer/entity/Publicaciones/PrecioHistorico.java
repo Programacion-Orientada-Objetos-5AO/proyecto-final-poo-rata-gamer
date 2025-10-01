@@ -1,16 +1,20 @@
 package ar.edu.huergo.rata_gamer.entity.publicaciones;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.EqualsAndHashCode;
-import jakarta.validation.constraints.NotNull; 
+import lombok.NoArgsConstructor; 
 
 
 @Entity
@@ -33,6 +37,8 @@ public class PrecioHistorico {
     private LocalDate fechaFin;
 
     @NotNull
-    private Double precio;
+    @Digits(integer = 10, fraction = 2)
+    @Column(precision = 10, scale = 2)
+    private BigDecimal precio;
 
 }

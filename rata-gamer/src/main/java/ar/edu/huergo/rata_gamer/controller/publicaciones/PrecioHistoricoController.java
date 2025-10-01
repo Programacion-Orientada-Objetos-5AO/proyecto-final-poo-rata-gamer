@@ -3,7 +3,6 @@ package ar.edu.huergo.rata_gamer.controller.publicaciones;
 import java.net.URI;
 import java.util.List;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import ar.edu.huergo.rata_gamer.dto.publicaciones.JuegoDTO;
 import ar.edu.huergo.rata_gamer.dto.publicaciones.PrecioHistoricoDTO;
 import ar.edu.huergo.rata_gamer.entity.publicaciones.PrecioHistorico;
 import ar.edu.huergo.rata_gamer.mapper.publicaciones.PrecioHistoricoMapper;
@@ -56,15 +54,15 @@ public class PrecioHistoricoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PrecioHistoricoDTO> actualizarPrecioHistorico(@Valid @PathVariable Long id, PrecioHistoricoDTO precioHistoricoDTO){
+    public ResponseEntity<PrecioHistoricoDTO> actualizarPrecioHistorico(@PathVariable Long id,@Valid @RequestBody PrecioHistoricoDTO precioHistoricoDTO){
         PrecioHistorico precioHistorico = precioHistoricoMapper.toEntity(precioHistoricoDTO);
         PrecioHistorico precioHistoricoActualizado = precioHistoricoService.actualizarPrecioHistorico(precioHistorico, id);
         PrecioHistoricoDTO precioHistoricoActualizadoDTO = precioHistoricoMapper.toDTO(precioHistoricoActualizado);
         return ResponseEntity.ok(precioHistoricoActualizadoDTO);
     }
 
-    @DeleteMapping
-    public ResponseEntity<Void> eliminarPrecioHistorico(@Valid @PathVariable Long id){
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminarPrecioHistorico(@PathVariable Long id){
         precioHistoricoService.eliminarPrecioHistoricoPorID(id);
         return ResponseEntity.noContent().build();
     }
