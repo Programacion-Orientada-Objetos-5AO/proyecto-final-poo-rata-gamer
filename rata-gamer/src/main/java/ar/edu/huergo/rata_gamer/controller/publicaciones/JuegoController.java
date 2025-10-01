@@ -55,7 +55,7 @@ public class JuegoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<JuegoDTO> actualizarJuego(@Valid @PathVariable Long id, JuegoDTO juegoDTO) {
+    public ResponseEntity<JuegoDTO> actualizarJuego(@PathVariable Long id,@Valid @RequestBody JuegoDTO juegoDTO) {
         Juego juego = juegoMapper.toEntity(juegoDTO);
         Juego juegoActualizado = juegoService.actualizarJuego(juego, id);
         JuegoDTO juegoActualizadoDTO = juegoMapper.toDTO(juegoActualizado);
