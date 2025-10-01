@@ -40,7 +40,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
                         // Rutas públicas para las vistas web
                         .requestMatchers("/", "/web", "/web/**").permitAll()
-                        .requestMatchers("/web/login", "/web/registro", "/web/acerca").permitAll()
+                        .requestMatchers("/web/login", "/web/login","/web/registro", "/web/acerca").permitAll()
                         .requestMatchers("/css/**", "/js/**", "/images/**", "/favicon.ico").permitAll()
                         
                         .requestMatchers(HttpMethod.GET, "/api/juegos/**")

@@ -12,12 +12,15 @@ public class RataGamerWebControler {
         return "index";
     }
 
-    // Si más adelante agregás vistas extra:
     @GetMapping("/web/registro")
-    public String registro() { return "registro"; }
+    public String registro() {
+         return "registro"; 
+    }
 
     @GetMapping("/web/login")
-    public String login() { return "login"; }
+    public String login() {
+         return "login"; 
+    }
 
     @GetMapping("/web/acerca")
     public String acerca() { return "acerca"; }
