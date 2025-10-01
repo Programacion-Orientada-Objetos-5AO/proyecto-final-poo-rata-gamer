@@ -18,7 +18,9 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import ar.edu.huergo.rata_gamer.repository.security.UsuarioRepository;
 
 @Configuration
@@ -37,8 +39,8 @@ public class SecurityConfig {
                 .sessionManagement(
                         session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.GET, "/api/juegos/**")
                         .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/juegos/**")
                         .hasAnyRole("ADMIN", "CLIENTE").requestMatchers("/api/juegos/**")
                         .hasRole("ADMIN").requestMatchers(HttpMethod.POST, "/api/juegos/**")
                         .hasRole("ADMIN").requestMatchers(HttpMethod.PUT, "/api/juegos/**")
