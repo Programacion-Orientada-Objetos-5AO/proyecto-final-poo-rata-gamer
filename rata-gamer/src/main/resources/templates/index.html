@@ -1,37 +1,46 @@
 <!DOCTYPE html>
-
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <title>Rata Gamer</title>
-  <link th:href="@{/css/style.css}" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
-
 <body>
-  <header>
-    <h1>Bienvenido a rata Gamer</h1>
-    <p>pagina HTML básica con Thymeleaf</p>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="logo">
+      <img th:src="@{/js/images/logo_RataGamer.png}" alt="Rata Gamer">
+      <h1>Rata Gamer</h1>
+    </div>
+    <nav class="nav">
+      <a th:href="@{/web/registro}" class="btn">Registrarse</a>
+      <a th:href="@{/web/login}" class="btn">Iniciar sesión</a>
+    </nav>
   </header>
 
+  <!-- MAIN -->
   <main>
-    <section>
-      <h2>Sobre Nosotros</h2>
-      <p>Rata Gamer es una plataforma dedicada a los amantes de los videojuegos. Aquí encontrarás las últimas noticias, reseñas y análisis de tus juegos favoritos.</p>
-    </section>
-
-    <section>
-      <h2>Nuestros Servicios</h2>
-      <p>Ofrecemos una variedad de servicios, incluyendo foros de discusión, guías de juego y una tienda en línea con los mejores precios.</p>
-    </section>
-
-    <section>
-      <h2>Contacto</h2>
-      <p>Si tienes alguna pregunta o necesitas ayuda, no dudes en contactarnos a través de nuestro formulario de contacto o redes sociales.</p>
+    <div class="search-bar">
+      <input type="text" placeholder="Buscar en Rata Gamer">
+    </div>
+    <section class="tabla">
+      <div class="col">Juego</div>
+      <div class="col">Precio</div>
     </section>
   </main>
-  
-  <footer>
-    <p>&copy; 2024 Rata Gamer. Todos los derechos reservados.</p>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-left">
+      <img th:src="@{/js/images/logo_RataGamer.png}" alt="Rata Gamer" class="footer-logo">
+      <span>Rata Gamer</span>
+    </div>
+    <div class="footer-right">
+      <p>📧 Info@alumno.huergo.edu.ar</p>
+      <p>📞 +54 11 1224-8755</p>
+    </div>
   </footer>
+
 </body>
 </html>
