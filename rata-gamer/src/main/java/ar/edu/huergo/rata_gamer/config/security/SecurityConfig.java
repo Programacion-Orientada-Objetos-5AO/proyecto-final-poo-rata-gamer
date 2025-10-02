@@ -41,7 +41,7 @@ public class SecurityConfig {
                         // Rutas públicas para las vistas web
                         .requestMatchers("/", "/web", "/web/**").permitAll()
                         .requestMatchers("/web/login", "/web/login","/web/registro", "/web/acerca").permitAll()
-                        .requestMatchers("/css/**", "/js/**", "/images/**", "/favicon.ico").permitAll()
+                        .requestMatchers("/fonts**", "/css/**", "/js/**", "/images/**", "/favicon.ico").permitAll()
                         
                         .requestMatchers(HttpMethod.GET, "/api/juegos/**")
                         .hasAnyRole("ADMIN", "CLIENTE").requestMatchers("/api/juegos/**")
