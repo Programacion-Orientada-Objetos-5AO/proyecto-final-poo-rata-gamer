@@ -9,18 +9,38 @@
   --shadow:0 4px 10px rgba(0,0,0,.15);
   --side-w-open: 240px;
   --side-w-closed: 64px;
+
+  /* Tipografías */
+  --title-font: 'Rampart One', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  --body-font: Arial, Helvetica, sans-serif;
 }
 
-/* Reseteo básico */
+/* Reset básico */
 *{box-sizing:border-box}
 html,body{height:100%}
-body{margin:0;background:#fff;color:#333;font-family:Arial,Helvetica,sans-serif}
 
-body{ font-family: var(--body-font); }
-.brand h1{ font-family: var(--title-font); letter-spacing: 1px; }
+body{
+  margin:0;
+  background:#fff;
+  color:#333;
+  font-family: var(--body-font);
+}
+
+.brand h1{
+  margin: 0;
+  font-size: 32px;
+  font-weight: 400; 
+  letter-spacing: 0; 
+  color: #111; 
+  text-shadow: none; 
+}
+
+
 .menu .menu-item span{ font-family: var(--body-font); }  
 
-.layout{display:flex}
+.layout {
+  display:flex
+}
 .sidebar{
   position:fixed; left:0; top:0; bottom:0;
   width:var(--side-w-open);
@@ -79,10 +99,12 @@ body.collapsed .footer{
 }
 
 .brand{display:flex; align-items:center; gap:12px}
+
 .brand img{width:48px; height:48px; object-fit:contain}
+
 .brand h1{
   margin:0; font-size:32px; font-weight:900; letter-spacing:1px;
-  color:#0b0b0b; text-shadow:3px 3px 0 #00000055;
+  color:#0b0b0b;
 }
 
 /* BOTONES HEADER */
@@ -144,92 +166,126 @@ body.collapsed .footer{
 
 @font-face {
   font-family: 'Rampart One';
-  src: url('/fonts/RampartOne/RampartOne-Regular.woff2') format('woff2'),
-       url('/fonts/RampartOne/RampartOne-Regular.woff') format('woff'),
-       url('/fonts/RampartOne/RampartOne-Regular.ttf') format('truetype');
+  src: url('../fonts/RampartOne/RampartOne-Regular.woff2') format('woff2'),
+       url('../fonts/RampartOne/RampartOne-Regular.woff') format('woff'),
+       url('../fonts/RampartOne/RampartOne-Regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
-  font-display: swap; 
+  font-display: swap;
 }
 
-/* Variables de tipografías */
-:root{
-  --title-font: 'Rampart One', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
-  --body-font: Arial, Helvetica, sans-serif;
-}
-
-/* “Rata Gamer” del header y del footer con Rampart One */
+/* Rampart One al texto del header y del footer */
 .header .brand h1,
-.footer .footer-left span{
-  font-family: var(--title-font);
+.footer .footer-left span {
+  font-family: 'Rampart One', sans-serif;
   font-weight: 400;
+  color: #111;      
+  letter-spacing: 0; 
 }
 
-main-login {
+/* LOGIN Y REGISTRO */
+.login, .registro {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 70vh;
+  background: var(--dark);
+  color: var(--text);
+  min-height: calc(100vh - 64px - 64px); /* header + footer */
+  padding: 40px 16px;
 }
 
-main-resgistro {
+.login-box, .registro-box {
+  background: var(--dark-2);
+  padding: 32px;
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  width: min(400px, 100%);
   display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 70vh;
+  flex-direction: column;
+  gap: 16px;
 }
 
-.login-box {
-  background: #f5f5f5;
-  padding: 20px 30px;
-  border-radius: 10px;
+.registro-box h2 {
+  margin: 0 0 12px;
+  font-family: var(--title-font);
+  font-size: 28px;
+  color: #36b042;
   text-align: center;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.4);
-  width: 300px;
 }
 
 .login-box h2 {
-  margin-bottom: 20px;
+  margin: 0 0 12px;
+  font-family: var(--title-font);
+  font-size: 28px;
+  color: #4976d2;
+  text-align: center;
 }
 
-.login-box label {
-  display: block;
-  text-align: left;
-  font-size: 0.9rem;
-  margin: 10px 0 5px;
+.login-box form,
+.registro-box form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.login-box input {
-  width: 100%;
-  padding: 10px;
-  border: none;
+.login-box input,
+.registro-box input {
+  padding: 10px 14px;
   border-radius: 8px;
-  margin-bottom: 10px;
-  background: black;
-  color: white;
+  border: 1px solid var(--muted);
+  background: var(--light);
+  color: #111;
+  font-size: 16px;
 }
 
-.login-box button {
-  width: 100%;
-  padding: 10px;
-  background: #5c6bff;
-  color: white;
-  border: none;
+.login-box button{
+  background: #4976d2;
+  color: #000;
+  padding: 10px 16px;
   border-radius: 8px;
-  cursor: pointer;
   font-weight: bold;
-  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  transition: background 0.2s ease;
 }
-.login-box button:hover {
-  background: #4a56e0;
+.registro-box button {
+  background: var(--green);
+  color: #000;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  transition: background 0.2s ease;
 }
 
-.login-box p {
-  font-size: 0.85rem;
-  margin-top: 10px;
+.login-box button:hover{
+  background-color: #4976d2;
 }
-.login-box a {
-  color: #3b6eff;
+.registro-box button:hover {
+  background: #36b042;
+}
+
+.login-box p,
+.registro-box p {
+  margin-top: 12px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.login-box a{
+  color: var(--blue);
+  font-weight: 600;
   text-decoration: none;
+}
+.registro-box a {
+  color: var(--green);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.login-box a:hover,
+.registro-box a:hover {
+  text-decoration: underline;
 }
 
