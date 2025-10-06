@@ -289,3 +289,11 @@ body.collapsed .footer{
   text-decoration: underline;
 }
 
+.sobre-nosotros {
+  color: #dbdad7;
+}
+
+.sobre-nosotros, h1 {
+  text-align: center;
+}
+

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rata Gamer</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rampart+One&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/css/style.css" th:href="@{/css/style.css}" />
+  <link rel="preload"
+    href="/fonts/RampartOne/RampartOne-Regular.woff2"
+    th:href="@{/fonts/RampartOne/RampartOne-Regular.woff2}"
+    as="font" type="font/woff2" crossorigin>
+
+</head>
+<body class="layout">
+
+  <aside id="sidebar" class="sidebar is-open">
+    <div class="sidebar-top">
+      <button id="btnHamb" class="hamb">
+        <!-- icono hamburguesa -->
+        <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true">
+          <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
+        </svg>
+      </button>
+      <span class="side-title">Inicio</span>
+    </div>
+
+    <nav class="menu">
+      <a class="menu-item is-active" th:href="@{/}">
+        <svg viewBox="0 0 24 24" width="22" height="22"><path d="M3 12l9-7 9 7v8a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-8z" fill="currentColor"/></svg>
+        <span>Inicio</span>
+      </a>
+
+      <a class="menu-item" th:href="@{/web/nosotros}">
+        <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5zm0 2c-5 0-9 2.5-9 5.5V22h18v-2.5C21 16.5 17 14 12 14z" fill="currentColor"/></svg>
+        <span>Sobre Nosotros</span>
+      </a>
+    </nav>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="page">
+    <header class="header">
+      <div class="brand">
+        <a th:href="@{/}">
+            <img th:src="@{/js/images/logo_RataGamer.png}" alt="Rata Gamer">
+        </a>
+        <h1>Rata Gamer</h1>
+      </div>
+      <nav class="actions">
+        <a class="btn ghost" th:href="@{/web/registro}">Registrarse</a>
+        <a class="btn ghost" th:href="@{/web/login}">Iniciar sesión</a>
+      </nav>
+    </header>
+
+    <section class="sobre-nosotros">
+        <h1>Sobre Nosotros</h1>
+        <p>
+            Bienvenido a <strong>Rata Gamer</strong>, una página pensada para ayudarte a 
+            encontrar el precio de tu juego favorito en distintas plataformas como 
+            Steam, Xbox, PlayStation y Epic. 
+        </p>
+        <p>
+            Nuestro objetivo es brindarle al gamer una herramienta rápida y sencilla 
+            para comparar valores y elegir la mejor opción antes de comprar.
+        </p>
+        <p>
+            Este proyecto está dirigido a todos los jugadores que buscan ahorrar y 
+            tener información clara en un solo lugar.
+        </p>
+        <p>
+            <em>Rata Gamer</em> fue fundado por estudiantes de 5.º año del 
+            <strong>Instituto Industrial Luis A. Huergo</strong>, con la idea de unir 
+            nuestra pasión por los videojuegos y la tecnología.
+        </p>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer-left">
+        <img th:src="@{/js/images/logo_RataGamer.png}" alt="Rata Gamer">
+        <span>Rata Gamer</span>
+      </div>
+      <div class="footer-right">
+        <p>📧 Info@alumno.huergo.edu.ar</p>
+        <p>📞 +54 11 1224-8755</p>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Toggle sidebar
+    const sidebar = document.getElementById('sidebar');
+    const btn = document.getElementById('btnHamb');
+    btn.addEventListener('click', () => {
+      sidebar.classList.toggle('is-open');
+      document.body.classList.toggle('collapsed');
+    });
+  </script>
+  
+</body>
+</html>
+
+</body>
+</html>

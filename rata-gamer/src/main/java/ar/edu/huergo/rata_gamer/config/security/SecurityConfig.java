@@ -53,8 +53,8 @@ public class SecurityConfig {
                 .requestMatchers("/css/**", "/js/**", "/images/**", "/webjars/**", "/favicon.ico").permitAll()
                 .requestMatchers("/h2-console/**").permitAll()
 
-                // ✅ Todas las vistas web públicas (incluye /web/registro)
-                .requestMatchers("/", "/web", "/web/**").permitAll()
+                // Todas las vistas web públicas 
+                .requestMatchers("/", "/web", "/web/**", "/web/nosotros").permitAll()
 
                 // API pública mínima
                 .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
