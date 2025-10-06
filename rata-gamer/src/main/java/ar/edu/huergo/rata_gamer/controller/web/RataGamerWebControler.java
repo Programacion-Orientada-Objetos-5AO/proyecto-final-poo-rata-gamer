@@ -25,7 +25,7 @@ public class RataGamerWebControler {
         return "registro"; // templates/registro.html
     }
 
-    // Procesar registro (Thymeleaf)
+    // Procesar registro del usuario 
     @PostMapping("/web/registro")
     public String procesarRegistro(@Valid @ModelAttribute("usuario") Usuario usuario,
                                    BindingResult result,
@@ -36,26 +36,33 @@ public class RataGamerWebControler {
             return "registro";
         }
         try {
-            // Tu UsuarioService requiere password y verificación (ajústalo si difiere)
+            // password y verificación de UsuarioService
             usuarioService.registrar(usuario, usuario.getPassword(), usuario.getPassword());
             ra.addFlashAttribute("success", "Usuario registrado exitosamente. Ahora podés iniciar sesión.");
-            return "redirect:/web/login";
+            return "redirect:/web/login"; // Redirije a web/login si se registro exitosamente
         } catch (Exception e) {
             model.addAttribute("error", "No se pudo registrar: " + e.getMessage());
-            return "registro";
+            return "registro"; // si hubo un error devulve templates/registro.html
         }
     }
 
     // Mostrar login
     @GetMapping("/web/login")
         public String mostrarLogin() {
-        return "login"; 
+        return "login"; // templates/login.html
     }
 
+    // Mostrar sobre nostros
+    @GetMapping("/web/nosotros")
+        public String nosotros() {
+        return "nosotros"; // templates/nosotros.html
+    }
 
     // Página de inicio web
     @GetMapping({"/web/", "/web"})
     public String home() {
-        return "index"; // opcional: templates/index.html si existe
+        return "index"; // templates/index.html 
     }
+
+    
 }
