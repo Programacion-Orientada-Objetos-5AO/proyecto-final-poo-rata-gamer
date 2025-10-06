@@ -50,18 +50,22 @@
   <main class = "registro">
     <div class="registro-box">
       <h2>Registrarse</h2>
-      <form>
-        <label for="Nombre">Nombre:</label>
-        <input type="nombre" id="nombre" placeholder="Ingrese su nombre de usuario:">
 
+      <form th:action="@{/web/registro}" method="post" th:object="${usuario}">
         <label for="email">Email:</label>
-        <input type="email" id="email" placeholder="Ingrese su email:">
+        <input type="email" id="email" th:field="*{username}" placeholder="Ingrese su email:" required>
 
         <label for="password">Password:</label>
-        <input type="password" id="password" placeholder="Ingrese su contraseña:">
-
-        <button type="submit">Iniciar sesión</button>
+        <input type="password" id="password" th:field="*{password}" placeholder="Ingrese su contraseña:" required>
+        
+        <input type="hidden"
+         th:if="${_csrf != null}"
+         th:name="${_csrf.parameterName}"
+         th:value="${_csrf.token}"/>
+         
+        <button type="submit">Crear cuenta</button>
       </form>
+
       <p>¿Ya tienes cuenta? 
         <a th:href="@{/web/login}">inicia sesion aqui </a>
       </p>
