@@ -4,6 +4,9 @@ import ar.edu.huergo.rata_gamer.entity.security.Usuario;
 import ar.edu.huergo.rata_gamer.service.security.UsuarioService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+
+import java.security.Principal;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -56,6 +59,18 @@ public class RataGamerWebControler {
     @GetMapping("/web/nosotros")
         public String nosotros() {
         return "nosotros"; // templates/nosotros.html
+    }
+
+    
+    @GetMapping("/web/miCuenta")
+        public String miCuenta(Model model, Principal principal) {
+        // Llama al usuario logueado
+        String email = principal.getName(); // usa el username como email
+
+        // pasa el email a la vista
+        model.addAttribute("email", email);
+
+            return "miCuenta"; // templates/miCuenta.html
     }
 
     // Página de inicio web

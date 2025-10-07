@@ -54,7 +54,7 @@ public class SecurityConfig {
                 .requestMatchers("/h2-console/**").permitAll()
 
                 // Todas las vistas web públicas 
-                .requestMatchers("/", "/web", "/web/**", "/web/nosotros").permitAll()
+                .requestMatchers("/", "/web", "/web/**", "/web/nosotros", "/web/miCuenta").permitAll()
 
                 // API pública mínima
                 .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
@@ -91,12 +91,13 @@ public class SecurityConfig {
                 .permitAll()
             )
 
+            
+
             .logout(logout -> logout
-                .logoutUrl("/web/logout")
-                .logoutSuccessUrl("/web/login?logout")
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/")
                 .permitAll()
             )
-
             // Manejo de errores JSON para API
             .exceptionHandling(ex -> ex
                 .accessDeniedHandler(accessDeniedHandler())
