@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import ar.edu.huergo.rata_gamer.entity.publicaciones.PrecioHistorico;
 import ar.edu.huergo.rata_gamer.repository.publicaciones.PrecioHistoricoRepository;
 import jakarta.persistence.EntityNotFoundException;
+import java.lang.reflect.Field;
+
 
 @Service
 public class PrecioHistoricoService {
@@ -34,9 +36,19 @@ public class PrecioHistoricoService {
 
     public PrecioHistorico actualizarPrecioHistorico(PrecioHistorico precioHistorico, Long id){
         PrecioHistorico precioACambiar = obtenerPrecioHistoricoPorId(id);
-        precioACambiar.setFechaInicio(precioHistorico.getFechaInicio());
-        precioACambiar.setFechaFin(precioHistorico.getFechaFin());
-        precioACambiar.setPrecio(precioHistorico.getPrecio());
+        
+        for (Field field : precioACambiar.getClass().getDeclaredFields()) {
+            field.setAccessible(true); // permite acceder a campos privados
+
+            try {
+                if (field.get(precioHistorico) != null) {
+                    field.set(precioACambiar, field.get(precioHistorico));
+                }
+            } catch (IllegalAccessException err) {
+                err.printStackTrace();
+            }
+
+        }
         return precioHistoricoRepository.save(precioACambiar);
     }
 
