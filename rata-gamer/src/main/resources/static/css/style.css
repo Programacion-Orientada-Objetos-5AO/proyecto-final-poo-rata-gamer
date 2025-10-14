@@ -221,15 +221,13 @@ body.collapsed .footer{
   text-align: center;
 }
 
-.login-box form,
-.registro-box form {
+.login-box form, .registro-box form {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-.login-box input,
-.registro-box input {
+.login-box input, .registro-box input {
   padding: 10px 14px;
   border-radius: 8px;
   border: 1px solid var(--muted);
@@ -246,7 +244,6 @@ body.collapsed .footer{
   font-weight: bold;
   cursor: pointer;
   border: none;
-  transition: background 0.2s ease;
 }
 .registro-box button {
   background: var(--green);
@@ -256,7 +253,6 @@ body.collapsed .footer{
   font-weight: bold;
   cursor: pointer;
   border: none;
-  transition: background 0.2s ease;
 }
 
 .login-box button:hover{
@@ -294,6 +290,6 @@ body.collapsed .footer{
 }
 
 .sobre-nosotros, h1 {
-  text-align: center;
+  text-align: center
 }
 
