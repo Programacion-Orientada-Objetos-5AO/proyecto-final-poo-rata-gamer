@@ -78,6 +78,26 @@ public class SecurityConfig {
 
             // Login web
             .formLogin(form -> form
+<<<<<<< HEAD
+=======
+                .loginPage("/web/login")
+                .loginProcessingUrl("/web/login")
+                .successHandler((request, response, authentication) -> {
+                    var isAdmin = authentication.getAuthorities().stream()
+                        .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+                    if (isAdmin) {
+                        response.sendRedirect("/web/admin/dashboard");
+                    } else {
+                        response.sendRedirect("/web/"); // clientes u otros roles
+                    }
+                })
+                .failureUrl("/web/login?error")
+                .permitAll()
+            )
+
+            // Login/Logout web
+            .formLogin(form -> form
+>>>>>>> ee5549b63a4e061baa7cfe8bfd92720294c3ba3d
                 .loginPage("/web/login")
                 .loginProcessingUrl("/web/login")
                 .successHandler((request, response, authentication) -> {
