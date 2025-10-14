@@ -54,7 +54,10 @@ public class SecurityConfig {
                 .requestMatchers("/h2-console/**").permitAll()
 
                 // Todas las vistas web públicas 
-                .requestMatchers("/", "/web", "/web/**", "/web/nosotros", "/web/miCuenta").permitAll()
+                .requestMatchers("/", "/web", "/web/**", "/web/nosotros", "/web/miCuenta", "/web/admin/dashboard").permitAll()
+
+                // Zona admin
+                .requestMatchers("/web/admin/dashboard").hasRole("ADMIN")
 
                 // API pública mínima
                 .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
@@ -75,18 +78,18 @@ public class SecurityConfig {
 
             // Login web
             .formLogin(form -> form
-                .loginPage("/web/login")           // vista login.html
-                .loginProcessingUrl("/web/login")  // endpoint que procesa POST
-                .defaultSuccessUrl("/web/", true)  // adonde redirige si es OK
-                .failureUrl("/web/login?error")    // query param en caso de error
-                .permitAll()
-            )
-
-            // Login/Logout web
-            .formLogin(form -> form
                 .loginPage("/web/login")
                 .loginProcessingUrl("/web/login")
-                .defaultSuccessUrl("/web/", true)
+                .successHandler((request, response, authentication) -> {
+                    var isAdmin = authentication.getAuthorities().stream()
+                        .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+                    System.out.println(isAdmin);
+                    if (isAdmin) {
+                        response.sendRedirect("/web/admin/dashboard");
+                    } else {
+                        response.sendRedirect("/web/"); // clientes u otros roles
+                    }
+                })
                 .failureUrl("/web/login?error")
                 .permitAll()
             )
