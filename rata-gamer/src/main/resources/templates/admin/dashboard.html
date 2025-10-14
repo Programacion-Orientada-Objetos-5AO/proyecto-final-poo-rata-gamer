@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>Rata Gamer - Panel Admin</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+  <header class="header">
+    <div class="logo">
+      <img th:src="@{/js/images/logo_RataGamer.png}" alt="Rata Gamer">
+      <h1>Panel de Administración</h1>
+    </div>
+    <nav class="nav">
+      <a th:href="@{/web/}">Inicio</a>
+      <a th:href="@{/logout}">Cerrar sesión</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h2>Bienvenido, Admin</h2>
+    <p>Desde aquí vas a gestionar lo que necesites (usuarios, juegos, ofertas, etc.).</p>
+
+    <section class="grid">
+      <a class="card" th:href="@{/web/miCuenta}">
+        <h3>Mi cuenta</h3>
+        <p>Ver perfil y datos de acceso.</p>
+      </a>
+      <!-- Agregá más accesos rápidos que quieras -->
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>© Rata Gamer</p>
+  </footer>
+</body>
+</html>
