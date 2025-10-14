@@ -78,8 +78,6 @@ public class SecurityConfig {
 
             // Login web
             .formLogin(form -> form
-<<<<<<< HEAD
-=======
                 .loginPage("/web/login")
                 .loginProcessingUrl("/web/login")
                 .successHandler((request, response, authentication) -> {
@@ -97,7 +95,6 @@ public class SecurityConfig {
 
             // Login/Logout web
             .formLogin(form -> form
->>>>>>> ee5549b63a4e061baa7cfe8bfd92720294c3ba3d
                 .loginPage("/web/login")
                 .loginProcessingUrl("/web/login")
                 .successHandler((request, response, authentication) -> {
