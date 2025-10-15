@@ -38,7 +38,7 @@ public class PrecioHistoricoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PrecioHistoricoDTO> obtenerPrecioHistoricoPorID(Long id){
+    public ResponseEntity<PrecioHistoricoDTO> obtenerPrecioHistoricoPorID(@PathVariable Long id){
         PrecioHistorico precioHistorico = precioHistoricoService.obtenerPrecioHistoricoPorId(id);
         PrecioHistoricoDTO precioHistoricoDTO = precioHistoricoMapper.toDTO(precioHistorico);
         return ResponseEntity.ok(precioHistoricoDTO);
