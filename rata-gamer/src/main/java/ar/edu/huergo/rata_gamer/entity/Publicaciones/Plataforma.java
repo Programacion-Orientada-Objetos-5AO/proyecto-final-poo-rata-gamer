@@ -33,6 +33,5 @@ public class Plataforma {
     @Column(length = 150)
     private List<Publicacion> publicaciones;
 
-
 }
 
