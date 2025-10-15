@@ -35,7 +35,7 @@ public class SecurityConfig {
     ) throws Exception {
 
         http
-            // CSRF: activo para vistas web; ignorado en /api/**
+            // Habilitar CSRF solo para rutas web, deshabilitar para API
             .csrf(csrf -> csrf
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 .ignoringRequestMatchers("/api/**")
@@ -53,17 +53,17 @@ public class SecurityConfig {
                 .requestMatchers("/css/**", "/js/**", "/images/**", "/webjars/**", "/favicon.ico").permitAll()
                 .requestMatchers("/h2-console/**").permitAll()
 
-                // Todas las vistas web públicas 
-                .requestMatchers("/", "/web", "/web/**", "/web/nosotros", "/web/miCuenta", "/web/admin/dashboard").permitAll()
+                //  ZONA ADMIN (protegida) 
+                .requestMatchers("/web/admin/**").hasRole("ADMIN")
 
-                // Zona admin
-                .requestMatchers("/web/admin/dashboard").hasRole("ADMIN")
+                //  Vistas públicas 
+                .requestMatchers("/", "/web", "/web/", "/web/nosotros", "/web/login", "/web/registro").permitAll()
 
                 // API pública mínima
                 .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/usuarios/registrar").permitAll()
 
-                // API protegida (ejemplos)
+                // API protegida 
                 .requestMatchers(HttpMethod.POST,   "/api/pedidos").hasRole("CLIENTE")
                 .requestMatchers(HttpMethod.GET,    "/api/pedidos/reporte").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.GET,    "/api/platos/**").hasAnyRole("ADMIN", "CLIENTE")
@@ -72,7 +72,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.PUT,    "/api/platos/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.DELETE, "/api/platos/**").hasRole("ADMIN")
 
-                // Lo demás, autenticado por defecto
+                
                 .anyRequest().authenticated()
             )
 
@@ -93,25 +93,6 @@ public class SecurityConfig {
                 .permitAll()
             )
 
-            // Login/Logout web
-            .formLogin(form -> form
-                .loginPage("/web/login")
-                .loginProcessingUrl("/web/login")
-                .successHandler((request, response, authentication) -> {
-                    var isAdmin = authentication.getAuthorities().stream()
-                        .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
-                    System.out.println(isAdmin);
-                    if (isAdmin) {
-                        response.sendRedirect("/web/admin/dashboard");
-                    } else {
-                        response.sendRedirect("/web/"); // clientes u otros roles
-                    }
-                })
-                .failureUrl("/web/login?error")
-                .permitAll()
-            )
-
-            
 
             .logout(logout -> logout
                 .logoutUrl("/logout")

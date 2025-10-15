@@ -293,3 +293,8 @@ body.collapsed .footer{
   text-align: center
 }
 
+.sobre-nosotros, h1 {
+  color: white;
+    text-align: center;
+}
+
