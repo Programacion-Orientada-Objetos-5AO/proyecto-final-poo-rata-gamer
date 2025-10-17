@@ -13,8 +13,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.test.context.ActiveProfiles;
+
 import ar.edu.huergo.rata_gamer.entity.publicaciones.Juego;
 
+@ActiveProfiles("test")
 @DataJpaTest
 @DisplayName("Tests de Integración - JuegoRepository")
 public class JuegoRepositoryTest {
