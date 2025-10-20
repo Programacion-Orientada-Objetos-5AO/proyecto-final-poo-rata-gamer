@@ -3,6 +3,7 @@ package ar.edu.huergo.rata_gamer.controller.publicaciones;
 import java.net.URI;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,11 +25,12 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/publicaciones")
 public class PublicacionController {
-    
+
     @Autowired
     private PublicacionMapper publicacionMapper;
 
     @Autowired
+    @Qualifier("publicacionServiceService")
     private PublicacionService publicacionService;
 
     @GetMapping
@@ -54,8 +56,9 @@ public class PublicacionController {
         return ResponseEntity.created(location).body(publicacionMapper.toDTO(nuevaPublicacion));
     }
 
-    @PutMapping
-    public ResponseEntity<PublicacionDTO> actualizarPublicacion( @Valid @RequestBody PublicacionDTO publicacionDTO, @PathVariable Long id){
+    @PutMapping("/{id}")
+    public ResponseEntity<PublicacionDTO> actualizarPublicacion(
+            @Valid @RequestBody PublicacionDTO publicacionDTO, @PathVariable Long id){
         Publicacion publicacion = publicacionMapper.toEntity(publicacionDTO);
         Publicacion publicacionActualizada = publicacionService.actualizarPublicacion(publicacion, id);
         PublicacionDTO publicacionActualizadaDTO = publicacionMapper.toDTO(publicacionActualizada);
@@ -66,6 +69,5 @@ public class PublicacionController {
     public ResponseEntity<Void> eliminarPublicacion(@PathVariable Long id){
         publicacionService.eliminarPublicacion(id);
         return ResponseEntity.noContent().build();
-
     }
 }
