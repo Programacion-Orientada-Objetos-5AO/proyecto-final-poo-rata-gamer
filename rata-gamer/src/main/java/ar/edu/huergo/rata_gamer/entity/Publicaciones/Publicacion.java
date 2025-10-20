@@ -17,10 +17,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 
 @Entity
-@Table(name = "juegos")
+@Table(name = "publicaciones")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Publicacion {
 
     @Id
@@ -29,11 +30,11 @@ public class Publicacion {
     private Long id;
 
     @NotNull
-    @ManyToOne  // <-- Asumiendo que muchos Publicacion pueden tener un mismo Juego
+    @ManyToOne
     private Juego juego;
 
     @NotNull
-    @ManyToOne  // <-- Similar para Plataforma
+    @ManyToOne  
     private Plataforma plataforma;  
 
     @NotNull

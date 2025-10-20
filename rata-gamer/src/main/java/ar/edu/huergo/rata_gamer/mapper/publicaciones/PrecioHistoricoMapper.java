@@ -18,7 +18,8 @@ public class PrecioHistoricoMapper {
             precioHistorico.getId(), 
             precioHistorico.getFechaInicio(),
             precioHistorico.getFechaFin(),
-            precioHistorico.getPrecio());
+            precioHistorico.getPrecio(),
+            precioHistorico.getPublicacion());
     }
 
     public PrecioHistorico toEntity(PrecioHistoricoDTO precioHistoricoDTO){
@@ -29,7 +30,8 @@ public class PrecioHistoricoMapper {
             precioHistoricoDTO.id(), 
             precioHistoricoDTO.fechaInicio(),
             precioHistoricoDTO.fechaFin(),
-            precioHistoricoDTO.precio());
+            precioHistoricoDTO.precio(),
+            precioHistoricoDTO.publicacion());
     }
 
     public List<PrecioHistoricoDTO> toDTOList(List<PrecioHistorico> precioHistoricos){

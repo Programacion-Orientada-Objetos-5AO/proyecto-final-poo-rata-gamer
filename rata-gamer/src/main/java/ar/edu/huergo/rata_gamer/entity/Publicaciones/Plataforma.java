@@ -7,8 +7,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-//falta añadir importaciones
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -27,10 +28,11 @@ public class Plataforma {
     @EqualsAndHashCode.Include
     private Long id;
 
+    @NotBlank
     @Column(nullable = false, unique = true, length = 50)
-    private String nombre; 
+    private String nombre;
 
-    @Column(length = 150)
+    @OneToMany(mappedBy = "plataforma")
     private List<Publicacion> publicaciones;
 
 }

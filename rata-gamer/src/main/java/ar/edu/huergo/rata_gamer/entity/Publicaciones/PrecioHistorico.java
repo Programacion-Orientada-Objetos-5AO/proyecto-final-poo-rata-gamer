@@ -8,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
@@ -40,5 +41,8 @@ public class PrecioHistorico {
     @Digits(integer = 10, fraction = 2)
     @Column(precision = 10, scale = 2)
     private BigDecimal precio;
+
+    @ManyToOne
+    private Publicacion publicacion;
 
 }

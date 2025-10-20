@@ -36,4 +36,11 @@ public class PublicacionMapper {
         }
         return publicaciones.stream().map(this::toDTO).toList();
     }
+
+    public List<Publicacion> toEntityList(List<PublicacionDTO> publicacionDTOs){
+        if(publicacionDTOs == null){
+            throw new IllegalArgumentException("La lista de publicaciones no puede ser nula");
+        }
+        return publicacionDTOs.stream().map(this::toEntity).toList();
+    }
 }

@@ -158,7 +158,7 @@ class PrecioHistoricoValidationTest {
     @DisplayName("Debería validar precio histórico con constructor completo")
     void deberiaValidarPrecioHistoricoConConstructorCompleto() {
         // Given
-        PrecioHistorico precioHistorico = new PrecioHistorico(1L, LocalDate.now(), LocalDate.now().plusDays(30), BigDecimal.valueOf(79.99));
+        PrecioHistorico precioHistorico = new PrecioHistorico(1L, LocalDate.now(), LocalDate.now().plusDays(30), BigDecimal.valueOf(79.99), null);
 
         // When
         Set<ConstraintViolation<PrecioHistorico>> violations = validator.validate(precioHistorico);
