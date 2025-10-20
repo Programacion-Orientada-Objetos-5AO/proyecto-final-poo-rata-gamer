@@ -18,6 +18,7 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -28,94 +29,155 @@ import ar.edu.huergo.rata_gamer.repository.security.UsuarioRepository;
 public class SecurityConfig {
 
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http,
-            JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
-        // Configuración central de Spring Security con JWT:
-        // - Deshabilitamos CSRF porque no usamos cookies/sesiones en un API stateless.
-        // - Forzamos manejo de sesión sin estado (los datos de auth vienen en el JWT).
-        // - Permitimos libre acceso solo al login, el resto requiere autenticación y roles.
-        // - Registramos nuestro filtro JWT antes del filtro de usuario/contraseña.
-        http.csrf(csrf -> csrf.disable())
-                .sessionManagement(
-                        session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/juegos/**")
-                        .hasAnyRole("ADMIN", "CLIENTE").requestMatchers("/api/juegos/**")
-                        .hasRole("ADMIN").requestMatchers(HttpMethod.POST, "/api/juegos/**")
-                        .hasRole("ADMIN").requestMatchers(HttpMethod.PUT, "/api/juegos/**")
-                        .hasRole("ADMIN").requestMatchers(HttpMethod.DELETE, "/api/juegos/**")
-                        .hasRole("ADMIN").anyRequest().authenticated())
-                .exceptionHandling(
-                        exceptions -> exceptions.accessDeniedHandler(accessDeniedHandler())
-                                .authenticationEntryPoint(authenticationEntryPoint()))
-                .addFilterBefore(jwtAuthenticationFilter,
-                        UsernamePasswordAuthenticationFilter.class);
+    public SecurityFilterChain securityFilterChain(
+            HttpSecurity http,
+            JwtAuthenticationFilter jwtAuthenticationFilter
+    ) throws Exception {
+
+        http
+            // Habilitar CSRF solo para rutas web, deshabilitar para API
+            .csrf(csrf -> csrf
+                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                .ignoringRequestMatchers("/api/**")
+            )
+
+            // Sesión requerida solo si hace falta (web); API trabajará sin sesión (stateless) por JWT
+            .sessionManagement(sm -> sm
+                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                .maximumSessions(1)
+                .maxSessionsPreventsLogin(false)
+            )
+
+            .authorizeHttpRequests(auth -> auth
+                // Estáticos y H2
+                .requestMatchers("/css/**", "/js/**", "/images/**", "/webjars/**", "/favicon.ico").permitAll()
+                .requestMatchers("/h2-console/**").permitAll()
+
+                //  ZONA ADMIN (protegida) 
+                .requestMatchers("/web/admin/**").hasRole("ADMIN")
+
+                //  Vistas públicas 
+                .requestMatchers("/", "/web", "/web/", "/web/nosotros", "/web/login", "/web/registro").permitAll()
+
+                // API pública mínima
+                .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/usuarios/registrar").permitAll()
+
+                // API protegida 
+                .requestMatchers(HttpMethod.POST,   "/api/pedidos").hasRole("CLIENTE")
+                .requestMatchers(HttpMethod.GET,    "/api/pedidos/reporte").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.GET,    "/api/platos/**").hasAnyRole("ADMIN", "CLIENTE")
+                .requestMatchers(                   "/api/ingredientes/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST,   "/api/platos/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.PUT,    "/api/platos/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/api/platos/**").hasRole("ADMIN")
+
+                
+                .anyRequest().authenticated()
+            )
+
+            // Login web
+            .formLogin(form -> form
+                .loginPage("/web/login")
+                .loginProcessingUrl("/web/login")
+                .successHandler((request, response, authentication) -> {
+                    var isAdmin = authentication.getAuthorities().stream()
+                        .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+                    if (isAdmin) {
+                        response.sendRedirect("/web/admin/dashboard");
+                    } else {
+                        response.sendRedirect("/web/"); // clientes u otros roles
+                    }
+                })
+                .failureUrl("/web/login?error")
+                .permitAll()
+            )
+
+
+            .logout(logout -> logout
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/")
+                .permitAll()
+            )
+            // Manejo de errores JSON para API
+            .exceptionHandling(ex -> ex
+                .accessDeniedHandler(accessDeniedHandler())
+                .authenticationEntryPoint(authenticationEntryPoint())
+            )
+
+            // H2 (frames)
+            .headers(h -> h.frameOptions(f -> f.disable()));
+
+        // El filtro JWT ya ignora rutas NO /api/** (early-return)
+        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+
         return http.build();
     }
 
     @Bean
-    PasswordEncoder passwordEncoder() {
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    AccessDeniedHandler accessDeniedHandler() {
-        return (request, response, accessDeniedException) -> {
+    public AccessDeniedHandler accessDeniedHandler() {
+        return (request, response, ex) -> {
             response.setStatus(403);
             response.setContentType(MediaType.APPLICATION_PROBLEM_JSON_VALUE);
-
-            ObjectMapper mapper = new ObjectMapper();
-            String jsonResponse = mapper.writeValueAsString(java.util.Map.of("type",
-                    "https://http.dev/problems/access-denied", "title", "Acceso denegado", "status",
-                    403, "detail", "No tienes permisos para acceder a este recurso"));
-
-            response.getWriter().write(jsonResponse);
+            String json = new ObjectMapper().writeValueAsString(
+                java.util.Map.of(
+                    "type", "https://http.dev/problems/access-denied",
+                    "title", "Acceso denegado",
+                    "status", 403,
+                    "detail", "No tienes permisos para acceder a este recurso"
+                )
+            );
+            response.getWriter().write(json);
         };
     }
 
     @Bean
-    AuthenticationEntryPoint authenticationEntryPoint() {
-        return (request, response, authException) -> {
+    public AuthenticationEntryPoint authenticationEntryPoint() {
+        return (request, response, ex) -> {
             response.setStatus(401);
             response.setContentType(MediaType.APPLICATION_PROBLEM_JSON_VALUE);
-
-            ObjectMapper mapper = new ObjectMapper();
-            String jsonResponse = mapper.writeValueAsString(java.util.Map.of("type",
-                    "https://http.dev/problems/unauthorized", "title", "No autorizado", "status",
-                    401, "detail", "Credenciales inválidas o faltantes"));
-
-            response.getWriter().write(jsonResponse);
+            String json = new ObjectMapper().writeValueAsString(
+                java.util.Map.of(
+                    "type", "https://http.dev/problems/unauthorized",
+                    "title", "No autorizado",
+                    "status", 401,
+                    "detail", "Credenciales inválidas o faltantes"
+                )
+            );
+            response.getWriter().write(json);
         };
     }
 
     @Bean
-    UserDetailsService userDetailsService(UsuarioRepository usuarioRepository) {
-        // Adaptamos nuestra entidad Usuario a UserDetails de Spring Security.
+    public UserDetailsService userDetailsService(UsuarioRepository usuarioRepository) {
         return username -> usuarioRepository.findByUsername(username)
-                .map(usuario -> org.springframework.security.core.userdetails.User
-                        .withUsername(usuario.getUsername()).password(usuario.getPassword())
-                        .roles(usuario.getRoles().stream().map(r -> r.getNombre())
-                                .toArray(String[]::new))
-                        .build())
-                .orElseThrow(
-                        () -> new UsernameNotFoundException("Usuario no encontrado: " + username));
+            .map(usuario -> org.springframework.security.core.userdetails.User
+                .withUsername(usuario.getUsername())
+                .password(usuario.getPassword())
+                .roles(usuario.getRoles().stream().map(r -> r.getNombre()).toArray(String[]::new))
+                .build()
+            )
+            .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado: " + username));
     }
 
     @Bean
-    DaoAuthenticationProvider daoAuthenticationProvider(UserDetailsService userDetailsService,
-            PasswordEncoder passwordEncoder) {
-        // Provider de autenticación que usa nuestro UserDetailsService y el encoder
-        // para validar credentials en /api/auth/login.
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider(userDetailsService);
+    public DaoAuthenticationProvider daoAuthenticationProvider(
+            UserDetailsService userDetailsService,
+            PasswordEncoder passwordEncoder
+    ) {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setUserDetailsService(userDetailsService);
         provider.setPasswordEncoder(passwordEncoder);
         return provider;
     }
 
     @Bean
-    AuthenticationManager authenticationManager(AuthenticationConfiguration configuration)
-            throws Exception {
-        // Exponemos el AuthenticationManager que usará el controlador de login.
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
 }
