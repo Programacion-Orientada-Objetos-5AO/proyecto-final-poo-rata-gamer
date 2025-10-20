@@ -25,8 +25,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
-	
-	// Thymeleaf
+
+	runtimeOnly 'com.h2database:h2'
+	//Thymeleaf
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 
 	// JWT
@@ -39,6 +40,7 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testCompileOnly 'org.projectlombok:lombok'
 	testAnnotationProcessor 'org.projectlombok:lombok'
+
 	
 	// H2 para desarrollo
 	runtimeOnly 'com.h2database:h2'
@@ -54,3 +56,4 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+

@@ -10,7 +10,7 @@ import ar.edu.huergo.rata_gamer.entity.publicaciones.Publicacion;
 import ar.edu.huergo.rata_gamer.repository.publicaciones.PublicacionRepository;
 import jakarta.persistence.EntityNotFoundException;
 
-@Service("publicacionServiceService")
+@Service
 public class PublicacionService {
  
     @Autowired
