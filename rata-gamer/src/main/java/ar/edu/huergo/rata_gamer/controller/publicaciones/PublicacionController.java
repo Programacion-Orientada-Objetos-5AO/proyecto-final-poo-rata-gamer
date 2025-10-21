@@ -1,7 +1,9 @@
+
 package ar.edu.huergo.rata_gamer.controller.publicaciones;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,12 +26,15 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/publicaciones")
 public class PublicacionController {
-    
+
     @Autowired
     private PublicacionMapper publicacionMapper;
 
     @Autowired
     private PublicacionService publicacionService;
+
+    @Autowired
+    private ar.edu.huergo.rata_gamer.service.publicaciones.PublicacionService apiPublicacionService;
 
     @GetMapping
     public ResponseEntity<List<PublicacionDTO>> obtenerPublicaciones(){
@@ -37,7 +42,7 @@ public class PublicacionController {
         List<PublicacionDTO> publicacionesDTO = publicacionMapper.toDtoList(publicaciones);
         return ResponseEntity.ok(publicacionesDTO);
     }
-    
+
     @GetMapping("/{id}")
     public ResponseEntity<PublicacionDTO> obtenerPublicacionPorId(@PathVariable Long id){
         Publicacion publicacion = publicacionService.obtenerPublicacionPorId(id);
@@ -54,8 +59,8 @@ public class PublicacionController {
         return ResponseEntity.created(location).body(publicacionMapper.toDTO(nuevaPublicacion));
     }
 
-    @PutMapping
-    public ResponseEntity<PublicacionDTO> actualizarPublicacion( @Valid @RequestBody PublicacionDTO publicacionDTO, @PathVariable Long id){
+    @PutMapping("/{id}")
+    public ResponseEntity<PublicacionDTO> actualizarPublicacion(@Valid @RequestBody PublicacionDTO publicacionDTO, @PathVariable Long id){
         Publicacion publicacion = publicacionMapper.toEntity(publicacionDTO);
         Publicacion publicacionActualizada = publicacionService.actualizarPublicacion(publicacion, id);
         PublicacionDTO publicacionActualizadaDTO = publicacionMapper.toDTO(publicacionActualizada);
@@ -66,6 +71,11 @@ public class PublicacionController {
     public ResponseEntity<Void> eliminarPublicacion(@PathVariable Long id){
         publicacionService.eliminarPublicacion(id);
         return ResponseEntity.noContent().build();
+    }
 
+    @PostMapping("/guardar-desde-api")
+    public ResponseEntity<Void> guardarPublicacionDesdeAPI(@RequestBody Map<String, Object> data) {
+        apiPublicacionService.guardarPublicacionDesdeAPI(data);
+        return ResponseEntity.ok().build();
     }
 }
