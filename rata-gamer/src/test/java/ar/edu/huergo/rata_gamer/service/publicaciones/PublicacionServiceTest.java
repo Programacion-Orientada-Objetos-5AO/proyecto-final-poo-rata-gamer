@@ -1,4 +1,4 @@
-package ar.edu.huergo.rata_gamer.entity.publicaciones;
+package ar.edu.huergo.rata_gamer.service.publicaciones;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
