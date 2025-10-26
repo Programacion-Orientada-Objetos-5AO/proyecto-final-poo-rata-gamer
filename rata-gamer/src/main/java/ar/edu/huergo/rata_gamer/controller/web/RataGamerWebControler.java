@@ -74,9 +74,14 @@ public class RataGamerWebControler {
     }
 
     // Página de inicio web
-    @GetMapping({"/web/", "/web"})
+    @GetMapping({"/", "/web/", "/web"})
     public String home() {
-        return "index"; // templates/index.html 
+        try {
+            return "index"; // templates/index.html
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 
     
