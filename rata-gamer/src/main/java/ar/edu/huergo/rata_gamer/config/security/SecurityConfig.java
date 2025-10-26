@@ -19,6 +19,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -53,17 +54,17 @@ public class SecurityConfig {
                 .requestMatchers("/css/**", "/js/**", "/images/**", "/webjars/**", "/favicon.ico").permitAll()
                 .requestMatchers("/h2-console/**").permitAll()
 
-                //  ZONA ADMIN (protegida) 
+                //  ZONA ADMIN (protegida)
                 .requestMatchers("/web/admin/**").hasRole("ADMIN")
 
-                //  Vistas públicas 
-                .requestMatchers("/", "/web", "/web/", "/web/nosotros", "/web/login", "/web/registro").permitAll()
+                //  Vistas públicas
+                .requestMatchers("/", "/web", "/web/", "/web/nosotros", "/web/login", "/web/registro", "/web/miCuenta").permitAll()
 
                 // API pública mínima
                 .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/usuarios/registrar").permitAll()
 
-                // API protegida 
+                // API protegida
                 .requestMatchers(HttpMethod.POST,   "/api/pedidos").hasRole("CLIENTE")
                 .requestMatchers(HttpMethod.GET,    "/api/pedidos/reporte").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.GET,    "/api/platos/**").hasAnyRole("ADMIN", "CLIENTE")
@@ -72,7 +73,9 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.PUT,    "/api/platos/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.DELETE, "/api/platos/**").hasRole("ADMIN")
 
-                
+                // Permitir todas las rutas de publicaciones para pruebas
+                .requestMatchers("/publicaciones/**").permitAll()
+
                 .anyRequest().authenticated()
             )
 
@@ -103,6 +106,7 @@ public class SecurityConfig {
             .exceptionHandling(ex -> ex
                 .accessDeniedHandler(accessDeniedHandler())
                 .authenticationEntryPoint(authenticationEntryPoint())
+                .defaultAuthenticationEntryPointFor(authenticationEntryPoint(), new AntPathRequestMatcher("/api/**"))
             )
 
             // H2 (frames)
