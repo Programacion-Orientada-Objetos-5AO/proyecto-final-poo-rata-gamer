@@ -29,6 +29,7 @@ public class Plataforma {
     private Long id;
 
     @NotBlank
+    @jakarta.validation.constraints.Size(max = 50, message = "El nombre debe tener menos de 51 caracteres")
     @Column(nullable = false, unique = true, length = 50)
     private String nombre;
 

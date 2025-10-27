@@ -37,7 +37,6 @@ public class Publicacion {
     @ManyToOne  
     private Plataforma plataforma;  
 
-    @NotNull
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "publicacion") // Otras opciones si es bidireccional
     private List<PrecioHistorico> preciosHistoricos;
 
