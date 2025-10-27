@@ -177,7 +177,7 @@ class JuegoValidationTest {
     @DisplayName("Debería validar juego con constructor completo")
     void deberiaValidarJuegoConConstructorCompleto() {
         // Given
-        Juego juego = new Juego(1L, "Silksong Zzz");
+        Juego juego = new Juego(1L, "Silksong Zzz", null);
 
         // When
         Set<ConstraintViolation<Juego>> violaciones = validator.validate(juego);

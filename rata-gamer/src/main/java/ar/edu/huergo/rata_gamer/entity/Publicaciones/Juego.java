@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.NotBlank;
@@ -29,6 +30,8 @@ public class Juego {
     @Size(max = 500, message = "El nombre debe tener menos de 501 caracteres")
     private String nombre;
 
+    @OneToMany(mappedBy = "juego")
+    private List<Publicacion> publicaciones;
 
     // @Size(max = 100, message = "la plataforma no puede exceder los 100 caracteres")
     // private List<Plataforma> plataformas;

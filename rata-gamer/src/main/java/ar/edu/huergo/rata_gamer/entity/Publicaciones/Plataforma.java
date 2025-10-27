@@ -1,12 +1,25 @@
 package ar.edu.huergo.rata_gamer.entity.publicaciones;
-/*package ar.edu.huergo.rata_gamer.entity;
 
+import java.util.List;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-//falta añadir importaciones
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "plataformas")
-@NoArgsConstructor
+@Data
+@AllArgsConstructor
+@NoArgsConstructor 
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Plataforma {
 
@@ -15,11 +28,12 @@ public class Plataforma {
     @EqualsAndHashCode.Include
     private Long id;
 
+    @NotBlank
     @Column(nullable = false, unique = true, length = 50)
-    private String nombre; 
+    private String nombre;
 
-    @Column(length = 150)
-    private String url;
+    @OneToMany(mappedBy = "plataforma")
+    private List<Publicacion> publicaciones;
 
-}*/
+}
 

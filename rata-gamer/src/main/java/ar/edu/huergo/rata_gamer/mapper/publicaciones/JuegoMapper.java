@@ -9,13 +9,20 @@ import ar.edu.huergo.rata_gamer.entity.publicaciones.Juego;
 
 @Component
 public class JuegoMapper {
+    private final PublicacionMapper publicacionMapper;
+
+    public JuegoMapper(PublicacionMapper publicacionMapper) {
+        this.publicacionMapper = publicacionMapper;
+    }
+
     public JuegoDTO toDTO(Juego juego){
         if(juego == null){
             throw new IllegalArgumentException("El juego no puede ser nulo");
         }
         return new JuegoDTO(
-            juego.getId(), 
-            juego.getNombre());
+            juego.getId(),
+            juego.getNombre(),
+            publicacionMapper.toDtoList(juego.getPublicaciones()));
     }
 
     public Juego toEntity(JuegoDTO juegoDTO){
@@ -23,8 +30,9 @@ public class JuegoMapper {
             throw new IllegalArgumentException("El juego no puede ser nulo");
         }
         return new Juego(
-            juegoDTO.id(), 
-            juegoDTO.nombre());
+            juegoDTO.id(),
+            juegoDTO.nombre(),
+            publicacionMapper.toEntityList(juegoDTO.publicaciones()));
     }
 
     public List<JuegoDTO> toDTOList(List<Juego> juegos){
