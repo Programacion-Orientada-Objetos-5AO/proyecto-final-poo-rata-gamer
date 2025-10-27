@@ -107,11 +107,9 @@ public class SecurityConfig {
                 .permitAll()
             )
             // Manejo de errores JSON para API
-            .exceptionHandling(ex -> ex
-                .accessDeniedHandler(accessDeniedHandler())
-                .authenticationEntryPoint(authenticationEntryPoint())
-                .defaultAuthenticationEntryPointFor(authenticationEntryPoint(), new AntPathRequestMatcher("/api/**"))
-            )
+           .exceptionHandling(
+                        exceptions -> exceptions.accessDeniedHandler(accessDeniedHandler())
+                                .authenticationEntryPoint(authenticationEntryPoint()))
 
             // H2 (frames)
             .headers(h -> h.frameOptions(f -> f.disable()));

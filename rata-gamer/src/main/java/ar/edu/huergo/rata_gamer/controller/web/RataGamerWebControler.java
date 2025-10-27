@@ -77,6 +77,7 @@ public class RataGamerWebControler {
     @GetMapping({"/", "/web/", "/web"})
     public String home() {
         try {
+            System.out.println("Accediendo a la página de inicio web");
             return "index"; // templates/index.html
         } catch (Exception e) {
             e.printStackTrace();
