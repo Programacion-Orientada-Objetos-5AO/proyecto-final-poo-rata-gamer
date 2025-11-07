@@ -42,7 +42,6 @@ document.addEventListener('click', (e) => {
   <aside id="sidebar" class="sidebar is-open">
     <div class="sidebar-top">
       <button id="btnHamb" class="hamb">
-        <!-- icono hamburguesa -->
         <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true">
           <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
         </svg>
@@ -84,7 +83,6 @@ document.addEventListener('click', (e) => {
         <h1>Rata Gamer</h1>
       </div>
       <nav class="actions">
-        <!-- Solo para NO logueados -->
         <a class="btn ghost" th:href="@{/web/registro}" sec:authorize="isAnonymous()">Registrarse</a>
         <a class="btn ghost" th:href="@{/web/login}" sec:authorize="isAnonymous()">Iniciar sesión</a>
 
@@ -235,6 +233,40 @@ document.addEventListener('click', (e) => {
         </div>
 
       </section>
+
+      <!-- 🎁 GIVEAWAYS (API) -->
+      <section style="margin-top: 40px;" th:if="${giveaways != null}">
+        <h2 style="margin-bottom: 10px;">🎁 Giveaways disponibles</h2>
+
+        <table style="width:100%; border-collapse: collapse;">
+          <thead>
+            <tr style="border-bottom: 2px solid #ddd; text-align:left;">
+              <th style="padding:8px;">Imagen</th>
+              <th style="padding:8px;">Título</th>
+              <th style="padding:8px;">Plataformas</th>
+              <th style="padding:8px;">Link</th>
+            </tr>
+          </thead>
+          <tbody>
+          <tr th:each="g : ${giveaways}" style="border-bottom:1px solid #f0f0f0;">
+            <td style="padding:8px;">
+              <img th:src="${g.thumbnail}" alt="thumb" style="width:72px; border-radius:6px;">
+            </td>
+            <td style="padding:8px;" th:text="${g.title}">Título</td>
+            <td style="padding:8px;" th:text="${g.platforms}">Plataformas</td>
+            <td style="padding:8px;">
+              <a th:href="${g.open_giveaway_url}" target="_blank" rel="noopener">Obtener</a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+
+        <!-- Si no hay resultados -->
+        <div th:if="${#lists.isEmpty(giveaways)}" style="padding:12px; color:#666;">
+          No se encontraron giveaways para <b th:text="${q}">tu búsqueda</b>.
+        </div>
+      </section>
+
     </main>
 
     <!-- FOOTER -->
@@ -244,7 +276,6 @@ document.addEventListener('click', (e) => {
         <span>Rata Gamer</span>
       </div>
 
-      <!-- NUEVO: logos al centro -->
       <div class="footer-center">
         <img th:src="@{/js/images/xbox.png}" alt="Xbox" class="footer-logo">
         <img th:src="@{/js/images/steam.png}" alt="Steam" class="footer-logo">
@@ -262,7 +293,6 @@ document.addEventListener('click', (e) => {
   </div>
 
   <script>
-    // Toggle sidebar
     const sidebar = document.getElementById('sidebar');
     const btn = document.getElementById('btnHamb');
     btn.addEventListener('click', () => {

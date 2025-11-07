@@ -88,6 +88,4 @@ public class RataGamerWebControler {
 
         return "index";
     }
-
-    
 }
