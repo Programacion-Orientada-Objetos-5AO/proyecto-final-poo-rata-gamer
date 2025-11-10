@@ -17,12 +17,31 @@
     as="font" type="font/woff2" crossorigin>
 </head>
 
+<script>
+const form = document.querySelector('form.search');
+const loader = document.getElementById('loader');
+if (form && loader) {
+  form.addEventListener('submit', () => {
+    loader.classList.add('active');
+  });
+}
+
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('.btn-fav');
+  if (!btn) return;
+  const nombre = btn.getAttribute('data-nombre') || 'Juego';
+  btn.textContent = '✅ Guardado';
+  setTimeout(() => btn.textContent = '⭐', 1200);
+});
+
+
+</script>
+
 <body class="layout">
 
   <aside id="sidebar" class="sidebar is-open">
     <div class="sidebar-top">
       <button id="btnHamb" class="hamb">
-        <!-- icono hamburguesa -->
         <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true">
           <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
         </svg>
@@ -64,7 +83,6 @@
         <h1>Rata Gamer</h1>
       </div>
       <nav class="actions">
-        <!-- Solo para NO logueados -->
         <a class="btn ghost" th:href="@{/web/registro}" sec:authorize="isAnonymous()">Registrarse</a>
         <a class="btn ghost" th:href="@{/web/login}" sec:authorize="isAnonymous()">Iniciar sesión</a>
 
@@ -76,23 +94,180 @@
       </nav>
     </header>
 
-    <main class="content">
-      <div class="search">
-        <span class="magnify">🔍</span>
-        <input type="text" placeholder="Buscar en Rata Gamer">
-      </div>
+    <!-- HERO GAMER -->
+    <section class="hero">
+      <div class="hero-content">
+        <h1 class="hero-title">Rata Gamer</h1>
+        <p class="hero-sub">Tu radar gamer: precios, ofertas y juegos gratis, todo en un solo lugar.</p>
 
-      <section class="tabla">
-        <div class="thead">
-          <div>Juego</div>
-          <div>Precio</div>
+        <div class="platform-logos">
+          <img src="/js/images/Steam-logo-2.png" alt="Steam">
+          <img src="/js/images/Epic-Games-logo-1.png" alt="Epic Games">
+          <img src="/js/images/Xbox-Logo-2.png" alt="Xbox">
+          <img src="/js/images/Steam-logo-2.png" alt="PS">
+          <img src="/js/images/Windows.png" alt="PC">
         </div>
-        <div class="tbody">
-          <div>-</div><div>-</div>
-          <div>-</div><div>-</div>
-          <div>-</div><div>-</div>
+      </div>
+    </section>
+
+    <main class="content">
+      <form class="search-bar" method="get" action="/">
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input type="text" name="buscar" placeholder="Buscar juegos, plataformas o géneros..." th:value="${buscado}">
+          <button type="submit">Buscar</button>
+        </div>
+      </form>
+
+      
+    
+      <section class="resultados" th:if="${juegos != null}">
+
+        <!-- TABLA (Desktop) -->
+        <div class="tabla-wrapper" th:if="${!#lists.isEmpty(juegos)}">
+          <table class="tabla-juegos">
+            <thead>
+              <tr>
+                <th>Juego</th>
+                <th>Precio</th>
+                <th>Plataformas</th>
+                <th>Imagen</th>
+                <th>Link</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="juego : ${juegos}">
+                <td class="card-title" th:text="${juego.nombre}"></td>
+
+                <!-- PRECIO + BADGE -->
+                <td>
+                  <span th:text="${juego.precio}"></span>
+                  <span class="badge badge-free"
+                        th:if="${juego.precio == null or #strings.equalsIgnoreCase(juego.precio, 'free') or juego.precio == '$0' or juego.precio == '$0.00'}">
+                    GRATIS
+                  </span>
+                  <span class="badge badge-off"
+                        th:if="${juego.precio != null and juego.precio.startsWith('-')}">
+                    OFERTA
+                  </span>
+                </td>
+
+                <!-- ICONOS DE PLATAFORMA -->
+                <td>
+                  <div class="plats">
+                    <img class="plat-icon" th:if="${juego.plataforma != null and #strings.containsIgnoreCase(juego.plataforma,'steam')}"
+                        th:src="@{/js/images/Steam-logo-2.png}" alt="Steam">
+                    <img class="plat-icon" th:if="${juego.plataforma != null and #strings.containsIgnoreCase(juego.plataforma,'epic')}"
+                        th:src="@{/js/images/Epic-Games-logo-1.png}" alt="Epic">
+                    <img class="plat-icon" th:if="${juego.plataforma != null and (#strings.containsIgnoreCase(juego.plataforma,'xbox'))}"
+                        th:src="@{/js/images/Xbox-Logo-2.png}" alt="Xbox">
+                    <img class="plat-icon" th:if="${juego.plataforma != null and (#strings.containsIgnoreCase(juego.plataforma,'playstation') or #strings.containsIgnoreCase(juego.plataforma,'ps'))}"
+                        th:src="@{/js/images/Playstation_logo_2.png}" alt="PlayStation">
+                    <img class="plat-icon" th:if="${juego.plataforma != null and (#strings.containsIgnoreCase(juego.plataforma,'pc') or #strings.containsIgnoreCase(juego.plataforma,'windows'))}"
+                        th:src="@{/js/images/windows.png}" alt="PC">
+                    <img class="plat-icon" th:if="${juego.plataforma != null and #strings.containsIgnoreCase(juego.plataforma,'switch')}"
+                        th:src="@{/js/images/Nintendo_Switch.png}" alt="Switch">
+                    <img class="plat-icon" th:if="${juego.plataforma != null and (#strings.containsIgnoreCase(juego.plataforma,'ios') or #strings.containsIgnoreCase(juego.plataforma,'apple'))}"
+                        th:src="@{/js/images/apple.png}" alt="Apple">
+                    <img class="plat-icon" th:if="${juego.plataforma != null and (#strings.containsIgnoreCase(juego.plataforma,'ios') or #strings.containsIgnoreCase(juego.plataforma,'apple'))}"
+                        th:src="@{/js/images/Android.png}" alt="Apple">
+                      
+                    <!-- Texto fallback -->
+                    <span th:if="${juego.plataforma == null}" style="color:#aaa;">-</span>
+                  </div>
+                </td>
+
+                <td><img th:src="${juego.imagen}" width="80" alt="img"></td>
+                <td>
+                  <a th:href="${juego.link}" target="_blank">Ver</a>
+                  <!-- Botón favorito (hook JS) -->
+                  <button class="btn-fav" type="button" th:attr="data-nombre=${juego.nombre}">⭐</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- SIN RESULTADOS -->
+        <p class="no-resultados" th:if="${#lists.isEmpty(juegos)}">
+          No se encontraron juegos para "<span th:text="${buscado}"></span>".
+        </p>
+
+        <!-- CARDS (Mobile) -->
+        <div class="cards" th:if="${!#lists.isEmpty(juegos)}">
+          <div class="card" th:each="juego : ${juegos}">
+            <img th:src="${juego.imagen}" alt="img">
+            <div>
+              <div class="card-title" th:text="${juego.nombre}"></div>
+              <div class="card-sub">
+                <span th:text="${juego.precio}"></span>
+                <span class="badge badge-free"
+                      th:if="${juego.precio == null or #strings.equalsIgnoreCase(juego.precio, 'free') or juego.precio == '$0' or juego.precio == '$0.00'}">
+                  GRATIS
+                </span>
+              </div>
+              <div class="plats" style="margin:6px 0;">
+                <!-- mismos íconos que en la tabla -->
+                <img class="plat-icon" th:if="${juego.plataforma != null and #strings.containsIgnoreCase(juego.plataforma,'steam')}"
+                    th:src="@{/js/images/icons/steam.svg}" alt="Steam">
+                <img class="plat-icon" th:if="${juego.plataforma != null and #strings.containsIgnoreCase(juego.plataforma,'epic')}"
+                    th:src="@{/js/images/icons/epic.svg}" alt="Epic">
+                <img class="plat-icon" th:if="${juego.plataforma != null and (#strings.containsIgnoreCase(juego.plataforma,'xbox'))}"
+                    th:src="@{/js/images/icons/xbox.svg}" alt="Xbox">
+                <img class="plat-icon" th:if="${juego.plataforma != null and (#strings.containsIgnoreCase(juego.plataforma,'playstation') or #strings.containsIgnoreCase(juego.plataforma,'ps'))}"
+                    th:src="@{/js/images/icons/playstation.svg}" alt="PlayStation">
+                <img class="plat-icon" th:if="${juego.plataforma != null and (#strings.containsIgnoreCase(juego.plataforma,'pc') or #strings.containsIgnoreCase(juego.plataforma,'windows'))}"
+                    th:src="@{/js/images/icons/pc.svg}" alt="PC">
+                <img class="plat-icon" th:if="${juego.plataforma != null and #strings.containsIgnoreCase(juego.plataforma,'android')}"
+                    th:src="@{/js/images/icons/android.svg}" alt="Android">
+                <img class="plat-icon" th:if="${juego.plataforma != null and #strings.containsIgnoreCase(juego.plataforma,'switch')}"
+                    th:src="@{/js/images/icons/switch.svg}" alt="Switch">
+                <img class="plat-icon" th:if="${juego.plataforma != null and (#strings.containsIgnoreCase(juego.plataforma,'ios') or #strings.containsIgnoreCase(juego.plataforma,'apple'))}"
+                    th:src="@{/js/images/icons/apple.svg}" alt="Apple">
+              </div>
+              <div class="card-actions">
+                <a class="btn ghost" th:href="${juego.link}" target="_blank">Ver</a>
+                <button class="btn-fav" type="button" th:attr="data-nombre=${juego.nombre}">⭐ Favorito</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- 🎁 GIVEAWAYS (API) -->
+      <section style="margin-top: 40px;" th:if="${giveaways != null}">
+        <h2 style="margin-bottom: 10px;">🎁 Giveaways disponibles</h2>
+
+        <table style="width:100%; border-collapse: collapse;">
+          <thead>
+            <tr style="border-bottom: 2px solid #ddd; text-align:left;">
+              <th style="padding:8px;">Imagen</th>
+              <th style="padding:8px;">Título</th>
+              <th style="padding:8px;">Plataformas</th>
+              <th style="padding:8px;">Link</th>
+            </tr>
+          </thead>
+          <tbody>
+          <tr th:each="g : ${giveaways}" style="border-bottom:1px solid #f0f0f0;">
+            <td style="padding:8px;">
+              <img th:src="${g.thumbnail}" alt="thumb" style="width:72px; border-radius:6px;">
+            </td>
+            <td style="padding:8px;" th:text="${g.title}">Título</td>
+            <td style="padding:8px;" th:text="${g.platforms}">Plataformas</td>
+            <td style="padding:8px;">
+              <a th:href="${g.open_giveaway_url}" target="_blank" rel="noopener">Obtener</a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+
+        <!-- Si no hay resultados -->
+        <div th:if="${#lists.isEmpty(giveaways)}" style="padding:12px; color:#666;">
+          No se encontraron giveaways para <b th:text="${q}">tu búsqueda</b>.
         </div>
       </section>
+
     </main>
 
     <!-- FOOTER -->
@@ -102,7 +277,6 @@
         <span>Rata Gamer</span>
       </div>
 
-      <!-- NUEVO: logos al centro -->
       <div class="footer-center">
         <img th:src="@{/js/images/xbox.png}" alt="Xbox" class="footer-logo">
         <img th:src="@{/js/images/steam.png}" alt="Steam" class="footer-logo">
@@ -120,7 +294,6 @@
   </div>
 
   <script>
-    // Toggle sidebar
     const sidebar = document.getElementById('sidebar');
     const btn = document.getElementById('btnHamb');
     btn.addEventListener('click', () => {

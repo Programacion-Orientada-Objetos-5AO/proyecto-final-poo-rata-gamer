@@ -1,10 +1,5 @@
 package ar.edu.huergo.rata_gamer.controller.web;
 
-import ar.edu.huergo.rata_gamer.entity.security.Usuario;
-import ar.edu.huergo.rata_gamer.service.security.UsuarioService;
-import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
-
 import java.security.Principal;
 
 import org.springframework.stereotype.Controller;
@@ -13,19 +8,27 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ar.edu.huergo.rata_gamer.entity.security.Usuario;
+import ar.edu.huergo.rata_gamer.service.publicaciones.JuegoApiService;
+import ar.edu.huergo.rata_gamer.service.security.UsuarioService;
+import jakarta.validation.Valid; 
+import lombok.RequiredArgsConstructor;
 @Controller
 @RequiredArgsConstructor
 public class RataGamerWebControler {
 
     private final UsuarioService usuarioService;
+    
+    private final JuegoApiService juegoApiService;
 
     // Mostrar formulario de registro
     @GetMapping("/web/registro")
     public String registro(Model model) {
         model.addAttribute("usuario", new Usuario());
-        return "registro"; // templates/registro.html
+        return "registro"; 
     }
 
     // Procesar registro del usuario 
@@ -74,16 +77,15 @@ public class RataGamerWebControler {
     }
 
     // Página de inicio web
-    @GetMapping({"/", "/web/", "/web"})
-    public String home() {
-        try {
-            System.out.println("Accediendo a la página de inicio web");
-            return "index"; // templates/index.html
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw e;
-        }
-    }
+    @GetMapping("/")
+    public String index(@RequestParam(required = false) String buscar, Model model) {
 
-    
+        if (buscar != null && !buscar.isBlank()) {
+            var juegos = juegoApiService.buscar(buscar);
+            model.addAttribute("juegos", juegos);
+            model.addAttribute("buscado", buscar);
+        }
+
+        return "index";
+    }
 }
