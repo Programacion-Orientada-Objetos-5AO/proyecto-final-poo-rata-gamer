@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ar.edu.huergo.rata_gamer.entity.publicaciones.Oferta;
+import ar.edu.huergo.rata_gamer.entity.Publicaciones.Oferta;
 import ar.edu.huergo.rata_gamer.repository.publicaciones.OfertaRepository;
 import jakarta.persistence.EntityNotFoundException;
 

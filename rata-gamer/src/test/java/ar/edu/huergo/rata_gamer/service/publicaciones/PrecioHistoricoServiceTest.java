@@ -21,7 +21,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import ar.edu.huergo.rata_gamer.entity.publicaciones.PrecioHistorico;
+
+import ar.edu.huergo.rata_gamer.entity.Publicaciones.PrecioHistorico;
 import ar.edu.huergo.rata_gamer.repository.publicaciones.PrecioHistoricoRepository;
 import jakarta.persistence.EntityNotFoundException;
 

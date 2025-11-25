@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import ar.edu.huergo.rata_gamer.dto.publicaciones.PrecioHistoricoDTO;
-import ar.edu.huergo.rata_gamer.entity.publicaciones.PrecioHistorico;
+import ar.edu.huergo.rata_gamer.entity.Publicaciones.PrecioHistorico;
 
 
 @Component

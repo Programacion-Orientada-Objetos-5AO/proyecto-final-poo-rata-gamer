@@ -14,10 +14,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ar.edu.huergo.rata_gamer.entity.publicaciones.Juego;
-import ar.edu.huergo.rata_gamer.entity.publicaciones.Plataforma;
-import ar.edu.huergo.rata_gamer.entity.publicaciones.PrecioHistorico;
-import ar.edu.huergo.rata_gamer.entity.publicaciones.Publicacion;
+import ar.edu.huergo.rata_gamer.entity.Publicaciones.Juego;
+import ar.edu.huergo.rata_gamer.entity.Publicaciones.Plataforma;
+import ar.edu.huergo.rata_gamer.entity.Publicaciones.PrecioHistorico;
+import ar.edu.huergo.rata_gamer.entity.Publicaciones.Publicacion;
 import ar.edu.huergo.rata_gamer.repository.publicaciones.JuegoRepository;
 import ar.edu.huergo.rata_gamer.repository.publicaciones.PlataformaRepository;
 import ar.edu.huergo.rata_gamer.repository.publicaciones.PrecioHistoricoRepository;

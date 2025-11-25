@@ -23,7 +23,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import ar.edu.huergo.rata_gamer.entity.publicaciones.Oferta;
+import ar.edu.huergo.rata_gamer.entity.Publicaciones.Oferta;
 import ar.edu.huergo.rata_gamer.repository.publicaciones.OfertaRepository;
 import jakarta.persistence.EntityNotFoundException;
 

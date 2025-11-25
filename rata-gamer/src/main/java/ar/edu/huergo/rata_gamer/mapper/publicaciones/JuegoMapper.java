@@ -4,7 +4,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import ar.edu.huergo.rata_gamer.dto.publicaciones.JuegoDTO;
-import ar.edu.huergo.rata_gamer.entity.publicaciones.Juego;
+import ar.edu.huergo.rata_gamer.entity.Publicaciones.Juego;
 
 
 @Component

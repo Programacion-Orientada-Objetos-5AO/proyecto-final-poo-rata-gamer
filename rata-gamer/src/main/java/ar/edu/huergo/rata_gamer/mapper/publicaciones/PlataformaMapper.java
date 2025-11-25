@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import ar.edu.huergo.rata_gamer.dto.publicaciones.PlataformaDTO;
-import ar.edu.huergo.rata_gamer.entity.publicaciones.Plataforma;
+import ar.edu.huergo.rata_gamer.entity.Publicaciones.Plataforma;
 
 @Component
 public class PlataformaMapper {

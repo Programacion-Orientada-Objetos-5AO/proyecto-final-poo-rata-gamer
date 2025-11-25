@@ -9,6 +9,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import ar.edu.huergo.rata_gamer.entity.Publicaciones.Juego;
+import ar.edu.huergo.rata_gamer.entity.Publicaciones.Plataforma;
+import ar.edu.huergo.rata_gamer.entity.Publicaciones.Publicacion;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;

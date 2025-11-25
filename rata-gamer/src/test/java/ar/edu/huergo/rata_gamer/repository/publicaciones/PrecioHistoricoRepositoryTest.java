@@ -16,7 +16,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import ar.edu.huergo.rata_gamer.entity.publicaciones.PrecioHistorico;
+
+import ar.edu.huergo.rata_gamer.entity.Publicaciones.PrecioHistorico;
 
 @DataJpaTest
 @DisplayName("Tests de Integración - PrecioHistoricoRepository")

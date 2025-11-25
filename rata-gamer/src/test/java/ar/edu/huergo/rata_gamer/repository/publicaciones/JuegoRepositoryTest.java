@@ -15,7 +15,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.ActiveProfiles;
 
-import ar.edu.huergo.rata_gamer.entity.publicaciones.Juego;
+import ar.edu.huergo.rata_gamer.entity.Publicaciones.Juego;
 
 @ActiveProfiles("test")
 @DataJpaTest

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import ar.edu.huergo.rata_gamer.dto.publicaciones.OfertaDTO;
-import ar.edu.huergo.rata_gamer.entity.publicaciones.Oferta;
+import ar.edu.huergo.rata_gamer.entity.Publicaciones.Oferta;
 import ar.edu.huergo.rata_gamer.mapper.publicaciones.OfertaMapper;
 import ar.edu.huergo.rata_gamer.service.publicaciones.OfertaService;
 import jakarta.validation.Valid;
