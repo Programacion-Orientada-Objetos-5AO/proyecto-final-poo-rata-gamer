@@ -58,7 +58,7 @@ public class SecurityConfig {
                 .requestMatchers("/web/admin/**").hasRole("ADMIN")
 
                 //  Vistas públicas
-                .requestMatchers("/", "/web", "/web/", "/web/nosotros", "/web/login", "/web/registro", "/web/miCuenta").permitAll()
+                .requestMatchers("/", "/web", "/web/", "/web/nosotros", "/web/login", "/web/registro", "/web/miCuenta", "/inventario/productos").permitAll()
 
                 // API pública mínima
                 .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
