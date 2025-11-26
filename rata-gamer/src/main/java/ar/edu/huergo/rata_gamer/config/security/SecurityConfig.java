@@ -39,7 +39,7 @@ public class SecurityConfig {
             // Habilitar CSRF solo para rutas web, deshabilitar para API
             .csrf(csrf -> csrf
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                .ignoringRequestMatchers("/api/**", "/juegos/**", "/plataformas/**", "/publicaciones/**", "/ofertas/**", "/precios-historicos/**")
+                .ignoringRequestMatchers("/api/**", "/juegos/**", "/plataformas/**", "/publicaciones/**", "/ofertas/**", "/precios-historicos/**", "/prestamos-libros/**")
             )
 
             // Sesión requerida solo si hace falta (web); API trabajará sin sesión (stateless) por JWT
@@ -73,6 +73,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.PUT,    "/api/platos/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.DELETE, "/api/platos/**").hasRole("ADMIN")
 
+                .requestMatchers("/prestamos-libros/**").permitAll()
                 // Permitir todas las rutas de publicaciones para pruebas
                 .requestMatchers("/publicaciones/**").permitAll()
                 .requestMatchers("/juegos/**").permitAll()
